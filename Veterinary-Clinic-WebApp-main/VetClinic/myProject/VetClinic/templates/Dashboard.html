@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <script src="{% static 'javascript/dashboard.js' %}"></script>
+    <title>Appointment Dashboard</title>
+</head>
+<body>
+    <div class="brand-name" style="width: 100%; padding: 20px; box-sizing: border-box;">
+        <a href="{% url 'owner' %}" title="Dashboard" class="logo-link">
+
+            <img src="{% static 'media/pet_care.png' %}" class="logo-icon">
+        </a>
+    </div>
+
+    <!-- Content Container -->
+    <div class="container" style="width: 100%; padding: 20px; box-sizing: border-box;">
+        <h2 style="text-align: center;">Appointment Dashboard</h2> <!-- Centered title -->
+        <div class="navigation" style="text-align: center; margin-bottom: 20px;">
+            <button id="prev-week" onclick="navigateWeek(-1)" disabled>Previous Week</button>
+            <button onclick="navigateWeek(1)">Next Week</button>
+        </div>
+
+        <div class="calendar-grid" style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-top: 20px;">
+            {% for day in week_days %}
+                <div class="calendar-day {% if day.is_past or day.date == today_date %}disabled{% endif %}" style="padding: 10px; border: 1px solid #ccc; text-align: center; background-color: #f9f9f9; position: relative;">
+                    <div class="calendar-day-header" style="font-weight: bold;">
+                        {{ day.date }}<br>{{ day.name }}
+                    </div>
+                    {% if day.is_past or day.date == today_date %}
+                        <!-- Leave the box empty for past days and today -->
+                    {% elif day.times|length >= 4 %}
+                        <div class="unavailable" style="background-color: #f8d7da;">Unavailable</div>
+                    {% elif day.times %}
+                        <div class="times-list">
+                            {% for time in day.times %}
+                                <p>{{ time }} AM Occupied</p>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="available" style="padding: 5px; background-color: #d3ffd3;">Available</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="action-button" style="text-align: center; margin-top: 20px;">
+            <a href="{% url 'appwindow' %}" class="btn" style="padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">Appoint Now</a>
+        </div>
+    </div>
+</body>
+</html>

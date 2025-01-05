@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vet History</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+        }
+
+        header {
+            background-color: #4285f4;
+            color: white;
+            padding: 15px 20px;
+            font-size: 24px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .history-table {
+            width: 80%;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .history-header {
+            background-color: #f1f3f4;
+            color: #202124;
+            font-weight: 500;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-header span {
+            font-size: 18px;
+        }
+
+        .history-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .history-item:hover {
+            background-color: #f1f3f4;
+        }
+
+        .history-item a {
+            text-decoration: none;
+            color: #202124;
+            flex-grow: 1;
+        }
+
+        .history-item div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .history-item h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #202124;
+        }
+
+        .history-item p {
+            margin: 5px 0 0;
+            font-size: 14px;
+            color: #5f6368;
+        }
+
+        .history-item .date-stored {
+            font-size: 14px;
+            color: #5f6368;
+        }
+
+        .history-item .date-stored span {
+            color: #4285f4;
+        }
+
+        .back-button {
+            background-color: #4285f4;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .back-button:hover {
+            background-color: #357ae8;
+        }
+    </style>
+</head>
+<body>
+    <header>Vet Diagnosis History</header>
+    <div class="container">
+        <div class="history-table">
+            <div class="history-header">
+                <span>Diagnoses</span>
+            </div>
+            <ul class="history-list">
+                {% if diagnoses %}
+                    {% for diagnosis in diagnoses %}
+                        <li class="history-item">
+                            <a href="{% url 'diagnosis_detail' diagnosis.id %}" class="diagnosis-link">
+                                <div>
+                                    <h3>{{ diagnosis.pet_name }} - {{ diagnosis.date_of_visit }}</h3>
+                                    <p>Owner: {{ diagnosis.owner_name }} | Species: {{ diagnosis.pet_species }}</p>
+                                    <p>Diagnosis: {{ diagnosis.diagnosis }}</p>
+                                </div>
+                            </a>
+                            <div class="date-stored">
+                                <span>Date Added: {{ diagnosis.created_at|date:"Y-m-d H:i" }}</span>
+                            </div>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li class="history-item">
+                        <div>No diagnosis history available.</div>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div style="text-align:center;">
+        <button class="back-button" onclick="goBack()">Back to Vet History</button>
+    </div>
+
+    <script>
+        function goBack() {
+        window.location.href = "{% url 'vet' %}";  // Redirects to the vet history page
+    }
+        
+
+        function printDiagnosis(diagnosisId) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            const diagnosisElement = document.getElementById('diagnosis-' + diagnosisId);
+            const diagnosisContent = diagnosisElement.cloneNode(true);
+
+            const printButton = diagnosisContent.querySelector('.print-button');
+            if (printButton) {
+                printButton.remove();
+            }
+
+            const contentText = diagnosisContent.innerText;
+            doc.text("Diagnosis History", 20, 20);
+            doc.text(contentText, 20, 30);
+            doc.save("Diagnosis-History-" + diagnosisId + ".pdf");
+        }
+    </script>
+</body>
+</html>

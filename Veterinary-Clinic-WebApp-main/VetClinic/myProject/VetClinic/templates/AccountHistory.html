@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account History</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/account_history.css' %}">
+    <style>
+        .profile-dropdown {
+            
+            right: 5px;
+            top: -50px;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 800px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .popup h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .popup .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Pet Care Admin Window</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'admin' %}">Appointment Schedule</a></li>
+                <li><a href="{% url 'adaccount' %}">Account History</a></li>
+                <li><a href="{% url 'trans' %}">Transaction History</a></li>
+            </ul>
+        </nav>
+        <div class="header-right">
+            <details class="profile-dropdown">
+                <summary>
+                    <img class="profile-icon" src="{% static 'Media/icons.png' %}" alt="Profile Icon">
+                </summary>
+                <div class="profile-dropdown-content">
+                    <ul class="profile-menu">
+                        <li><a href="{% url 'logout' %}"><span class="menu-icon"></span> Logout</a></li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+    </header>
+
+    <!-- Search and Sort Section -->
+    <div id="search-container">
+        <input type="text" id="search-input" placeholder="Search...">
+        <button id="search-button">Search</button>
+        <select id="sort-column">
+            <option value="first-name">Sort by First Name</option>
+            <option value="last-name">Sort by Last Name</option>
+            <option value="email">Sort by Email</option>
+            <option value="address">Sort by Address</option>
+            <option value="phone">Sort by Phone Number</option>
+        </select>
+        <button id="sort-button">Sort</button>
+    </div>
+
+    <!-- Account History Table -->
+    <table border="1" cellpadding="8" cellspacing="0">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for account in accounts %}
+            <tr>
+                <td>{{ account.fname }}</td>
+                <td>{{ account.lname }}</td>
+                <td>{{ account.email }}</td>
+                <td>{{ account.number }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script src="{% static 'javascript/account_history.js' %}"></script>
+</body>
+</html>

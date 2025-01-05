@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Password</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            font-size: 20px;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #B4D9FF, #FDEECF);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        label {
+            font-size: 18px;
+            color: #333;
+        }
+
+        input[type="password"] {
+            width: 92%;
+            padding: 15px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 5px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 15px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            transition: background 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #4a8fd2;
+            transform: scale(1.05);
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-button:hover {
+            background-color: #4a8fd2;
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+    <a href="{% url 'profile' %}" class="back-button">Back</a>
+
+    <div class="container">
+        <h2>Change Your Password</h2>
+
+        <form id="change-password-form" action="{% url 'change' %}" method="post">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="current_password">Current Password:</label>
+                <input type="password" id="current_password" name="current_password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">New Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm New Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        // Check the URL for query parameters to show the status messages
+        const urlParams = new URLSearchParams(window.location.search);
+        const status = urlParams.get('status');
+    
+        // Create a notification container
+        const notificationContainer = document.createElement('div');
+        notificationContainer.style.position = 'fixed';
+        notificationContainer.style.top = '20px';
+        notificationContainer.style.left = '50%';
+        notificationContainer.style.transform = 'translateX(-50%)';
+        notificationContainer.style.backgroundColor = '#f44336';  // Default color for error
+        notificationContainer.style.color = 'white';
+        notificationContainer.style.padding = '15px';
+        notificationContainer.style.borderRadius = '8px';
+        notificationContainer.style.fontSize = '16px';
+        notificationContainer.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.2)';
+        notificationContainer.style.zIndex = '1000';
+        notificationContainer.style.display = 'none';  // Initially hidden
+    
+        // Add the notification container to the body
+        document.body.appendChild(notificationContainer);
+    
+        // Handle the status and display appropriate notification
+        if (status === 'incorrect_current_password') {
+            notificationContainer.innerHTML = "Current password is incorrect.";
+            notificationContainer.style.backgroundColor = '#f44336';  // Error color (red)
+            notificationContainer.style.display = 'block';
+        } else if (status === 'password_mismatch') {
+            notificationContainer.innerHTML = "New password and confirmation password do not match.";
+            notificationContainer.style.backgroundColor = '#f44336';  // Error color (red)
+            notificationContainer.style.display = 'block';
+        } else if (status === 'success') {
+            notificationContainer.innerHTML = "Password changed successfully.";
+            notificationContainer.style.backgroundColor = '#4CAF50';  // Success color (green)
+            notificationContainer.style.display = 'block';
+    
+            
+        }
+    
+        // Hide the notification after 5 seconds
+        setTimeout(() => {
+            notificationContainer.style.display = 'none';
+        }, 3000);
+    </script>
+    
+</body>
+</html>

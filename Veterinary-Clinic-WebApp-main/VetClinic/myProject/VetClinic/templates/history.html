@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnosis Details</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .prescription-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            border: 2px solid #ddd; /* Add a border */
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            text-align: center; /* Center text */
+        }
+        header {
+            background-color: #94d7c0;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            border-bottom: 2px solid #ddd;
+        }
+        .clinic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .clinic-header h1 {
+            font-size: 28px;
+            margin: 0;
+        }
+        .clinic-header .doctor-info {
+            text-align: right;
+        }
+        .section {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .section h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .section p {
+            margin: 5px 0;
+            font-size: 16px;
+            color: #555;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .back-btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .back-btn:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <header>Diagnosis Details</header>
+    <div class="prescription-container" id="diagnosis-123">
+        <div class="clinic-header">
+            <div>
+                <h1>Pet Care Clinic</h1>
+                <p>www.petcare.com</p>
+            </div>
+            
+        </div>
+        <hr>
+        <div class="section">
+            <h2>Patient Details</h2>
+            <p><strong>Owner's Name:</strong> {{ diagnosis.owner_name }}</p>
+            <p><strong>Pet Species:</strong> {{ diagnosis.pet_species }}</p>
+            <p><strong>Reason for Visit:</strong> {{ diagnosis.reason_for_visit }}</p>
+        </div>
+        <div class="section">
+            <h2>Diagnosis and Treatment</h2>
+            <p><strong>Diagnosis:</strong> {{ diagnosis.diagnosis }}</p>
+            <p><strong>Treatment:</strong> {{ diagnosis.treatment }}</p>
+            <p><strong>Dosage Instructions:</strong> {{ diagnosis.dosage_instructions|default:"N/A" }}</p>
+            <p><strong>Follow-up Care:</strong> {{ diagnosis.follow_up_care|default:"N/A" }}</p>
+        </div>
+        <div class="footer">
+            <p>Street 123/456, Your City | Phone number: +00 000 000 | yourmail@mail.com</p>
+        </div>
+        <button onclick="printDiagnosis()">Download as PDF</button>
+        <button class="back-btn" onclick="goBack()">Back</button>
+    </div>
+
+    <script>
+        function printDiagnosis() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+    
+            // Set font for the document
+            doc.setFont("helvetica");
+    
+            // Title Section
+            doc.setFontSize(20);
+            doc.text("Diagnosis Details", 105, 20, null, null, 'center');
+    
+            // Clinic Info Section
+            doc.setFontSize(14);
+            doc.text("Pet Care Clinic", 20, 40);
+            doc.text("www.petcare.com", 20, 45);
+    
+            
+    
+            doc.setLineWidth(0.5);
+            doc.line(10, 50, 200, 50);  // Horizontal line
+    
+            // Patient Details Section
+            doc.setFontSize(16);
+            doc.text("Patient Details:", 20, 60);
+            doc.setFontSize(12);
+            doc.text(`Owner's Name: {{ diagnosis.owner_name }}`, 20, 70);
+            doc.text(`Pet Species: {{ diagnosis.pet_species }}`, 20, 75);
+            doc.text(`Reason for Visit: {{ diagnosis.reason_for_visit }}`, 20, 80);
+    
+            doc.line(10, 85, 200, 85);  // Horizontal line
+    
+            // Diagnosis and Treatment Section
+            doc.setFontSize(16);
+            doc.text("Diagnosis and Treatment:", 20, 95);
+            doc.setFontSize(12);
+            doc.text(`Diagnosis: {{ diagnosis.diagnosis }}`, 20, 105);
+            doc.text(`Treatment: {{ diagnosis.treatment }}`, 20, 110);
+            doc.text(`Dosage Instructions: {{ diagnosis.dosage_instructions|default:"N/A" }}`, 20, 115);
+            doc.text(`Follow-up Care: {{ diagnosis.follow_up_care|default:"N/A" }}`, 20, 120);
+    
+            doc.line(10, 125, 200, 125);  // Horizontal line
+    
+            // Contact Information Section
+            doc.setFontSize(16);
+            doc.text("Contact Information:", 20, 135);
+            doc.setFontSize(12);
+            doc.text("Street 123/456, Your City", 20, 145);
+            doc.text("Phone number: +00 000 000", 20, 150);
+            doc.text("Email: yourmail@mail.com", 20, 155);
+    
+            // Add a final border around the entire content box
+            doc.setDrawColor(0, 0, 0);  // Black border color
+            doc.setLineWidth(0.5);      // Border thickness
+            doc.rect(10, 30, 190, 140); // Rectangle around the content
+    
+            // Save the PDF
+            doc.save("diagnosis-details.pdf");
+        }
+    
+        // Function to go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    
+</body>
+</html>

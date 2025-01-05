@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
+    <script src="{% static 'javascript/appointSched.js' %}"></script>
+    <style>
+        .profile-dropdown {
+            
+            right: 5px;
+            top: -50px;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 800px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .popup h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .popup .form-group {
+            margin-bottom: 15px;
+        }
+        /* Base styles for notifications */
+        .notification-services, .notification-species {
+    margin: 10px auto;
+    padding: 2px; /* Reduce padding for less height */
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px; /* Optional: Adjust font size */
+    line-height: 1.2; /* Optional: Adjust line spacing */
+    
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    color: white;
+    opacity: 1;
+    
+}
+
+
+/* Green for success */
+.notification-services.success, .notification-species.success {
+    background-color: green;
+}
+
+/* Red for error */
+.notification-services.error, .notification-species.error {
+    background-color: red;
+}
+
+
+
+
+
+
+    
+    </style>
+    <script>
+        
+
+        document.addEventListener("DOMContentLoaded", () => {
+    const notifications = document.querySelectorAll(".notification-services, .notification-species");
+    notifications.forEach(notification => {
+        setTimeout(() => {
+            notification.style.opacity = "0";
+            setTimeout(() => {
+                notification.remove(); // Remove the element completely
+            }, 500); // Wait for the fade-out transition to complete
+        }, 2000); // Display for 2 seconds
+    });
+});
+
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Pet Care Admin Window</h1>
+        <nav class="admin-nav">
+            <ul>
+                <li><a href="{% url 'admin' %}">Appointment Schedule</a></li>
+                <li><a href="{% url 'adaccount' %}">Account History</a></li>
+                <li><a href="{% url 'trans' %}">Transaction History</a></li>
+            </ul>
+        </nav>
+        <div class="header-right">
+            <details class="profile-dropdown">
+                <summary>
+                    <img class="profile-icon" src="{% static 'Media/icons.png' %}" alt="Profile Icon">
+                </summary>
+                <div class="profile-dropdown-content">
+                    <ul class="profile-menu">
+                        <li><a href="{% url 'logout' %}"><span class="menu-icon"></span> Logout</a></li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+    </header>
+
+
+    <main>
+        <div class="container">
+            <div class="appointment-container">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td colspan="3">
+                            <form id="walk-in-hours-form">
+                                <label for="walk-in-hours">Set Walk-in Hours:</label>
+                                <input type="text" id="walk-in-hours" value="Walk in Hours: 1PM-6PM">
+                                <button type="button" onclick="updateWalkInHours()" class="btn-update">Update</button>
+                            </form>
+                        </td>
+                    </tr>
+                
+                    <tr>
+                        <td colspan="2">
+                            <div class="text_in_image" style="display: none;">
+                                <div class="black-background">
+                                    <label id="display-walk-in-hours"></label>
+                                </div>
+                                <div class="black-background">
+                                    <label id="trusted-care-label">Trusted Care for Big Paws and Small</label>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                
+                    <table>
+                        <!-- Header Row -->
+                        <tr>
+                            <td colspan="3" style="text-align: center; vertical-align: middle; background-color: #3498db; color: white;">
+                                <h3>Edit Pet Species and Services</h3>
+                            </td>
+                        </tr>
+                        
+                        <!-- Unified Species Form with 3 Columns -->
+                        <tr>
+                            <!-- Species Selection -->
+                            <td>
+                                <form id="edit-species-form" method="POST">
+                                    {% csrf_token %}
+                                    <label for="current-species">Select Pet Species:</label>
+                                    <select id="current-species" name="current-species">
+                                        {% for s in species %}
+                                            <option value="{{ s.animal }}">{{ s.animal }}</option>
+                                        {% endfor %}
+                                    </select>
+                            </td>
+                            
+                            <!-- New Species Input -->
+                            <td>
+                                    <label for="new-species">New Pet Species:</label>
+                                    <input type="text" id="new-species" name="new-species" placeholder="Enter new pet species" 
+                                           required maxlength="12" autofocus 
+                                           onkeydown="return event.keyCode !== 32 && (event.keyCode < 48 || event.keyCode > 57);" 
+                                           oninput="this.value = this.value.replace(/[^A-Za-z]/g, '')">
+                            </td>
+                            
+                            <!-- Buttons and Notification -->
+                            <td>
+                                    <div class="button-container">
+                                        <button type="submit" name="edit-species">Add Species</button>
+                                        <button type="submit" name="delete-species" onclick="return confirm('Are you sure you want to delete this species?')">Delete Species</button>
+                                    </div>
+                                    
+                                    <!-- Display Species Notification -->
+                                    {% if species_notification %}
+                                    <div class="notification-species 
+                                        {% if "successfully" in species_notification %}success{% else %}error{% endif %}">
+                                        <p>{{ species_notification }}</p>
+                                    </div>
+                                    {% endif %}
+                                </form>
+                            </td>
+                        </tr>
+                        
+                        <!-- Unified Services Form with 3 Columns -->
+                        <tr>
+                            <!-- Services Selection -->
+                            <td>
+                                <form id="edit-services-form" method="POST">
+                                    {% csrf_token %}
+                                    <label for="current-services">Select Service:</label>
+                                    <select id="current-services" name="current-services">
+                                        {% for service in services %}
+                                            <option value="{{ service.services }}">{{ service.services }}</option>
+                                        {% endfor %}
+                                    </select>
+                            </td>
+                            
+                            <!-- New Service Input and Amount -->
+                            <td>
+                                    <label for="new-services">New Service:</label>
+                                    <input type="text" id="new-services" name="new-services" placeholder="Enter new service" 
+                                           required maxlength="12" 
+                                           onkeydown="return event.keyCode !== 32 && (event.keyCode < 48 || event.keyCode > 57);" 
+                                           oninput="this.value = this.value.replace(/[^A-Za-z]/g, '')">
+                                    
+                                    <label for="service-amount">Amount:</label>
+                                    <input type="number" id="service-amount" name="service-amount" placeholder="Enter service amount" 
+                                           required min="1" max="99999" oninput="if(this.value.length > 5) this.value = this.value.slice(0, 5)">
+                            </td>
+                            
+                            <!-- Buttons and Notification -->
+                            <td>
+                                    <div class="button-container">
+                                        <button type="submit" name="edit-services">Add Service</button>
+                                        <button type="submit" name="delete-services" onclick="return confirm('Are you sure you want to delete this service?')">Delete Service</button>
+                                    </div>
+                                    
+                                    <!-- Display Services Notification -->
+                                    {% if services_notification %}
+                                    <div class="notification-services 
+                                        {% if "successfully" in services_notification %}success{% else %}error{% endif %}">
+                                        <p>{{ services_notification }}</p>
+                                    </div>
+                                    {% endif %}
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                    
+
+                <h3>Appointment Table</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Owner's Name</th>
+                            <th>Pet Species</th>
+                            <th>Services</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Payment Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for schedule in page_obj %}
+                        <tr>
+                            <td>{{ schedule.Name }}</td>
+                            <td>{{ schedule.species }}</td>
+                            <td>{{ schedule.services }}</td>
+                            <td>{{ schedule.amount }}</td>
+                            <td>{{ schedule.date }}</td>
+                            <td>{{ schedule.time }}AM</td>
+                            <td>{{ schedule.status }}</td>
+                            <td id="payment-status-{{ schedule.id }}">{{ schedule.payment_status }}</td>
+                            <td>
+                                <form method="POST" action="{% url 'admin' %}" id="form-{{ schedule.id }}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="schedule_id" value="{{ schedule.id }}">
+                                    <button type="submit" name="mark-paid" class="paid-button"
+                                            {% if schedule.payment_status == 'Paid' %}disabled{% endif %}
+                                            id="paid-button-{{ schedule.id }}" onclick="confirmPayment('{{ schedule.id }}')">
+                                        {% if schedule.payment_status == 'Paid' %}Paid{% else %}Mark as Paid{% endif %}
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="9">No schedules available.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <!-- Pagination Controls -->
+                <div class="pagination">
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                    </span>
+
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,274 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+{% load static %}
+{% block get-started %}
+<div class="get-started">
+    <button class="get-started-button" id="getStartedBtn">Get Started</button>
+</div>
+{% endblock %}
+
+<style>
+    .home-container {
+        position: relative;
+        width: 100%;
+    }
+
+    .bg-container {
+        width: 100%;
+        position: relative;
+    }
+
+    .bg-image {
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+        filter: brightness(0.8);
+    }
+
+    .text-in-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        color: white;
+        z-index: 1;
+    }
+
+    .login-overlay {
+        position: absolute;
+        top: 50%;
+        right: 100px;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
+        width: 396px;
+        z-index: 2;
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .login-input {
+        padding: 14px 16px;
+        font-size: 17px;
+        border: 1px solid #dddfe2;
+        border-radius: 6px;
+        width: 100%;
+        margin-bottom: 12px;
+    }
+
+    .login-input:focus {
+        outline: none;
+        border-color: #1877f2;
+        box-shadow: 0 0 0 2px #e7f3ff;
+    }
+
+    .login-button {
+        background-color: #1877f2;
+        border: none;
+        border-radius: 6px;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        padding: 14px 16px;
+        width: 100%;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .login-button:hover {
+        background-color: #166fe5;
+    }
+
+    .forgot-password {
+        text-align: center;
+        margin: 16px 0;
+    }
+
+    .forgot-password a {
+        color: #1877f2;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .divider {
+        border-bottom: 1px solid #dadde1;
+        margin: 20px 0;
+    }
+
+    .create-account-button {
+        background-color: #42b72a;
+        border: none;
+        border-radius: 6px;
+        color: white;
+        font-size: 17px;
+        font-weight: bold;
+        padding: 14px 16px;
+        width: auto;
+        margin: 0 auto;
+        display: block;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .create-account-button:hover {
+        background-color: #36a420;
+    }
+
+    /* Notification style */
+    .notification {
+        background-color: #ffcc00;
+        color: black;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 20px;
+        font-size: 16px;
+        text-align: center;
+        display: none;
+        animation: fadeIn 1s forwards;
+    }
+
+    /* Fade-in effect for notification */
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .message-container {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 15px;
+        background-color: #f8d7da; 
+        border: 1px solid #f5c6cb; 
+        color: #721c24; 
+        border-radius: 5px;
+        text-align: center;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const getStartedBtn = document.getElementById('getStartedBtn');
+        const emailInput = document.getElementById('email');
+        const loginOverlay = document.querySelector('.login-overlay');
+        const notification = document.createElement('div');
+        notification.classList.add('notification');
+        notification.textContent = 'Please log in first to proceed!';
+        loginOverlay.appendChild(notification); // Add notification to the login overlay
+
+        getStartedBtn.addEventListener('click', function () {
+            // Show the notification
+            notification.style.display = 'block';
+
+            // Focus on the email input field after showing the notification
+            emailInput.focus();
+
+            // Hide the notification after 3 seconds
+            setTimeout(function () {
+                notification.style.display = 'none';
+            }, 3000);
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        const loginMessage = document.getElementById('loginMessage');
+
+        // Check if the loginMessage exists (only if there are messages)
+        if (loginMessage) {
+            // Hide the message after 2 seconds
+            setTimeout(function () {
+                loginMessage.style.display = 'none';
+            }, 2000);
+        }
+    });
+</script>
+
+<div class="login-overlay">
+    <form id="loginForm" class="login-form" method="POST">
+        {% csrf_token %}
+        <input type="email" name="email" id="email" class="login-input" placeholder="Email address" required autofocus maxlength="30"
+            onkeydown="return (event.keyCode !== 32);" 
+            oninput="checkEmailFormat(this)">
+        <input type="password" name="password" id="password" class="login-input" placeholder="Password" required maxlength="11"
+            onkeydown="return (event.keyCode !== 32);" 
+            oninput="checkPasswordFormat(this)">
+        <button type="submit" class="login-button">Log In</button>
+
+        <!-- Display error/success messages -->
+        {% if messages %}
+            <div id="loginMessage" class="message-container">
+                {% for message in messages %}
+                    <div class="message {% if message.tags == 'error' %}error-message{% else %}success-message{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="forgot-password">
+            <a href="{% url 'forgot' %}" target="_blank" style="color: #1a73e8;">Forgot password?</a>
+        </div>
+
+        <div class="divider"></div>
+        <div class="forgot-password">
+            <a href="{% url 'registration' %}">
+                <button type="button" class="create-account-button">
+                    Create New Account
+                </button>
+            </a>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Email field input restrictions
+    document.getElementById('email').addEventListener('input', function() {
+        let input = this;
+
+        // Remove spaces if typed in the input field
+        input.value = input.value.replace(/\s/g, ''); 
+
+        // Check if '@' is typed and append the domain automatically
+        if (input.value.indexOf('@') !== -1 && !input.value.includes('@gmail.com')) {
+            if (input.value.indexOf('@') === input.value.length - 1) {
+                // Append '@gmail.com' only if '@' is the last character typed
+                input.value += "gmail.com";
+            }
+        }
+    });
+
+    document.getElementById('email').addEventListener('keydown', function(event) {
+        // Allow backspace (keyCode 8) and other control keys
+        if (event.keyCode === 8 || event.keyCode === 46 || event.keyCode === 9 || event.keyCode === 37 || event.keyCode === 39) {
+            return; // Allow backspace, delete, tab, and arrow keys to work
+        }
+
+        // Prevent space key input (keyCode 32)
+        if (event.keyCode === 32) {
+            event.preventDefault(); // Prevent space key input
+        }
+
+        // Allow only alphanumeric characters (A-Z, a-z, 0-9) and some special characters
+        const validKeys = /^[a-zA-Z0-9@._-]$/;
+        if (!validKeys.test(event.key)) {
+            event.preventDefault();
+        }
+    });
+</script>
+
+{% endblock %}

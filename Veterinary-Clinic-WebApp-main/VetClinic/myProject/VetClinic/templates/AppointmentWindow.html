@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/appointment.css' %}">
+    <script src="{% static 'javascript/appointment.js' %}"></script>
+    <title>Pet Care Appointment</title>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="dashboard-button-container">
+        <a href="{% url 'dashboard' %}" class="dashboard-button">Go to Dashboard</a>
+    </div>
+
+    <!-- Main content -->
+    <div class="content">
+        <main>
+            <section class="appointment-container">
+                <h2 class="section-title">Appointment Form</h2>
+
+                <!-- Notification for slot availability -->
+                {% if messages %}
+                    <!-- Notification Container -->
+                    <div id="message-container">
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <form id="appointment-form" method="POST" action="{% url 'appwindow' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="full-name">Name</label>
+                        <input type="text" id="full-name" name="Name" placeholder="Enter your name" required maxlength="12"
+                               onkeydown="return (event.keyCode !== 32 && (event.keyCode < 48 || event.keyCode > 57));"
+                               oninput="this.value = this.value.replace(/[^A-Za-z]/g, '')">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pet-species">Pet Species</label>
+                        <select id="pet-species" name="species" required>
+                            <option value="" disabled selected>Select</option>
+                            {% for species in pet_species %}
+                                <option value="{{ species.animal }}">{{ species.animal }}</option>
+                            {% endfor %}
+                            <option value="Dog">Dog</option>
+                            <option value="Cat">Cat</option>
+                            <option value="Rabbit">Rabbit</option>
+                            <option value="Guinea Pig">Guinea Pig</option>
+                            <option value="Bird">Bird</option>
+                            <option value="Hamster">Hamster</option>
+                            <option value="Reptile">Reptile</option>
+                            <option value="Ferret">Ferret</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reason-appointment">Service</label>
+                        <select id="reason-appointment" name="services" required onchange="updateAmount()">
+                            <option value="" disabled selected>Select Service</option>
+                            {% for service in available_services %}
+                                <option value="{{ service.services }}" data-amount="{{ service.amount }}">{{ service.services }}</option>
+                            {% endfor %}
+                            <option value="Routine Check-up" data-amount="500">Routine Check-up</option>
+                            <option value="Vaccination" data-amount="600">Vaccination</option>
+                            <option value="Spaying/Neutering" data-amount="3000">Spaying/Neutering</option>
+                            <option value="Dental Care" data-amount="2000">Dental Care</option>
+                            <option value="Microchipping" data-amount="1500">Microchipping</option>
+                            <option value="Emergency Care" data-amount="4000">Emergency Care</option>
+                            <option value="Diagnostics" data-amount="1200">Diagnostics</option>
+                            <option value="Surgery" data-amount="8000">Surgery</option>
+                        </select>
+                    </div>
+
+                    <input type="hidden" id="amount" name="amount">
+
+                    <div id="amount-container" class="form-group">
+                        <p>Total Amount: <span id="total-amount">0</span></p>
+                    </div>
+
+                    <h3 class="section-subtitle">Select Date and Slot</h3>
+                    <div class="form-group">
+                        <label for="appointment-date">Select Date</label>
+                        <input type="date" id="appointment-date" name="date" required>
+                    </div>
+
+                    <div id="slot-container" class="form-group">
+                        <h4>Available Slots for Selected Date</h4>
+                        <select id="available-slots" name="time" required>
+                            <option value="" disabled selected>Select a time slot</option>
+                            <option value="08:00">08:00AM</option>
+                            <option value="09:00">09:00AM</option>
+                            <option value="10:00">10:00AM</option>
+                            <option value="11:00">11:00AM</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" id="submit-button">Submit</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    
+    <script>
+        // JavaScript code to handle form behavior and notifications
+        document.addEventListener("DOMContentLoaded", function () {
+            const bookedSlots = JSON.parse('{{ booked_slots|escapejs }}');
+            const dateInput = document.getElementById("appointment-date");
+            const slotSelect = document.getElementById("available-slots");
+
+            const fullNameInput = document.getElementById("full-name");
+            const petSpeciesSelect = document.getElementById("pet-species");
+            const serviceSelect = document.getElementById("reason-appointment");
+            const submitButton = document.getElementById("submit-button");
+
+            const amountInput = document.getElementById("amount");
+            const totalAmountSpan = document.getElementById("total-amount");
+
+            // Handle field enable/disable logic
+            petSpeciesSelect.disabled = true;
+            serviceSelect.disabled = true;
+            dateInput.disabled = true;
+            slotSelect.disabled = true;
+            submitButton.disabled = true;
+
+            fullNameInput.addEventListener("input", () => {
+                petSpeciesSelect.disabled = fullNameInput.value.trim() === "";
+            });
+
+            petSpeciesSelect.addEventListener("change", () => {
+                serviceSelect.disabled = petSpeciesSelect.value === "";
+            });
+
+            serviceSelect.addEventListener("change", () => {
+                dateInput.disabled = serviceSelect.value === "";
+            });
+
+            dateInput.addEventListener("change", () => {
+                slotSelect.disabled = dateInput.value === "";
+            });
+
+            slotSelect.addEventListener("change", () => {
+                submitButton.disabled = slotSelect.value === "";
+            });
+
+            // Update available slots for the selected date
+            dateInput.addEventListener("change", function () {
+                const selectedDate = dateInput.value;
+                Array.from(slotSelect.options).forEach(option => {
+                    option.disabled = bookedSlots[selectedDate]?.includes(option.value);
+                });
+            });
+
+            // Update total amount when a service is selected
+            serviceSelect.addEventListener("change", function () {
+                const selectedOption = serviceSelect.options[serviceSelect.selectedIndex];
+                const amount = selectedOption.getAttribute("data-amount") || "0";
+                amountInput.value = amount;
+                totalAmountSpan.textContent = amount;
+            });
+
+            // Automatically redirect to dashboard after 2 seconds if successful
+            const messagesContainer = document.getElementById("message-container");
+            if (messagesContainer) {
+                const successMessage = messagesContainer.querySelector(".alert-success");
+                if (successMessage) {
+                    setTimeout(() => {
+                        window.location.href = "{% url 'dashboard' %}";
+                    }, 1000); // 2 seconds delay
+                }
+            }
+
+            // Set the minimum date to tomorrow
+            const today = new Date();
+            today.setDate(today.getDate() + 1);  // Set to tomorrow
+            const tomorrow = today.toISOString().split('T')[0];  // Format as YYYY-MM-DD
+            dateInput.setAttribute("min", tomorrow);
+        });
+    </script>
+</body>
+</html>

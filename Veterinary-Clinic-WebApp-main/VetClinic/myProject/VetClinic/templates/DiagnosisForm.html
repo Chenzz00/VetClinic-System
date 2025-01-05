@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/diagnosis.css' %}">
+    <title>DIAGNOSIS FORM</title>
+</head>
+<body>
+
+    <form action="{% url 'diagnosis' %}" method="POST">
+        {% csrf_token %}
+        <div class="container">
+            <h2>DIAGNOSIS FORM</h2>
+
+            <label for="name">Owner's Name:</label><br>
+            <input type="text" id="name" name="name" placeholder="Enter owner's name" required><br><br>
+
+            <label for="reason">Reason of Diagnosis:</label><br>
+            <textarea id="reason" name="reason" placeholder="Type Here" required></textarea><br><br>
+
+            <label for="diagnosis">Diagnosis:</label><br>
+            <textarea id="diagnosis" name="diagnosis" placeholder="Type Here" required></textarea><br><br>
+
+            <button type="submit">Submit</button><br><br>
+        </div>
+    </form>
+
+    <script>
+        function submitDiagnosis() {
+            // Get the reason, diagnosis, and name from the form
+            const reason = document.getElementById('reason').value;
+            const diagnosis = document.getElementById('diagnosis').value;
+            const name = document.getElementById('name').value;
+
+            // Save the diagnosis and status in localStorage
+            const scheduleData = {
+                name: name,
+                reason: reason,
+                diagnosis: diagnosis,
+                status: 'Completed'
+            };
+
+            // Store the data in localStorage (using the name as a key for uniqueness)
+            localStorage.setItem('schedule_' + name, JSON.stringify(scheduleData));
+
+            // Show confirmation message
+            alert('Diagnosis submitted successfully');
+
+            // Remove hyperlink after diagnosis
+            const rowId = localStorage.getItem('selectedRowId');
+            removeHyperlink(rowId);
+
+            // Redirect back to the vet window
+            window.location.href = "{% url 'vet' %}";  // Correct URL pattern
+        }
+
+        // Function to remove the hyperlink from the owner's name
+        function removeHyperlink(rowId) {
+            const row = document.getElementById(rowId);
+            const ownerLink = row.querySelector('a');
+            if (ownerLink) {
+                ownerLink.remove();
+            }
+        }
+    </script>
+
+</body>
+</html>

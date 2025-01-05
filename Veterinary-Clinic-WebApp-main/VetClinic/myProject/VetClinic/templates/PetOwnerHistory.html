@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRANSACTION HISTORY</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/petOwnerHistory.css' %}">
+</head>
+<body>
+
+<!-- Back Button as an anchor tag -->
+<a href="javascript:history.back()" class="back-button">Back</a>
+
+<div class="history-container">
+    <h2>TRANSACTION HISTORY</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {% for schedule in schedules %}
+        <div class="transaction">
+            <div class="transaction-header">Name: {{ schedule.Name }}</div>
+            <div class="transaction-details">
+                <span><strong>Date of Appointment:</strong> {{ schedule.date }}</span>
+                <span><strong>Time:</strong> {{ schedule.time }} AM</span>
+                <span><strong>Amount:</strong> {{ schedule.amount }}</span>
+                <span><strong>Service:</strong> {{ schedule.services }}</span>
+                <span><strong>Species:</strong> {{ schedule.species }}</span>
+            </div>
+            <div class="transaction-status">
+                Status: 
+                {% if schedule.status == 'Completed' or schedule.payment_status == 'Paid' %}
+                    <span class="status-completed">{{ schedule.status }}</span>
+                {% else %}
+                    <span>{{ schedule.status }}</span>
+                {% endif %}
+            </div>
+
+        </div>
+        {% empty %}
+        <p>No transactions available</p>
+        {% endfor %}
+    </form>
+</div>
+
+</body>
+</html>

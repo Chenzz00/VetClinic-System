@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    {% load static %}
+    <script src="{% static 'javascript/profile.js' %}"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" 
+          rel="stylesheet">
+    
+    <script>
+       // Redirect to change password page
+        function redirectToChangePassword() {
+            window.location.href = "{% url 'change' %}";  // Change the URL to the change password page
+        }
+    </script>
+</head>
+<body class="bg-light" style="background: linear-gradient(to right, #B4D9FF, #FDEECF);">
+
+    <div class="container bg-white shadow-lg p-3 p-md-5 my-4 sty" style="border-radius: 30px;">
+        <div class="d-flex align-items-center mb-4">
+            <img src="{% static 'media/icons.png' %}" alt="Profile Picture" class="rounded-circle" 
+                 style="width: 70px; height: 70px;">
+            <div class="ml-3">
+                <h2 class="h4">{{ first_name }} {{ last_name }}</h2>
+                <p class="mb-0">{{ email }}</p>
+            </div>
+        </div>
+        
+        <form method="POST" action="{% url 'profile' %}">
+            {% csrf_token %}
+            <div class="form-row mb-4">
+                <div class="col-12 form-group">
+                    <label for="fname">First Name</label>
+                    <input type="text" id="fname" name="fname" class="form-control" value="{{ first_name }}" 
+                           readonly maxlength="12" autofocus 
+                           onkeydown="return (event.keyCode !== 32 && (event.keyCode < 48 || event.keyCode > 57));"
+                           oninput="this.value = this.value.replace(/[^A-Za-z]/g, '')">
+                </div>
+                <div class="col-12 form-group">
+                    <label for="lname">Last Name</label>
+                    <input type="text" id="lname" name="lname" class="form-control" value="{{ last_name }}" 
+                           readonly maxlength="12" autofocus 
+                           onkeydown="return (event.keyCode !== 32 && (event.keyCode < 48 || event.keyCode > 57));"
+                           oninput="this.value = this.value.replace(/[^A-Za-z]/g, '')">
+                </div>
+                <div class="col-12 form-group">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ email }}" 
+                           placeholder="Enter your new email" required maxlength="30" onkeydown="return (event.keyCode !== 32);" 
+                           oninput="checkEmailFormat(this)" readonly>
+                    <div class="form-text">Format: XXXXX@gmail.com (30 characters only)</div>
+                    <span id="email-warning" class="text-danger d-none">Please enter a valid email ending 
+                        with @gmail.com</span>                    
+                </div>
+                <div class="col-12 form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="text" id="phone" name="phone" class="form-control" value="{{ phone_number }}" 
+                           required maxlength="11" readonly oninput="validatePhone()">
+                </div>
+            </div>
+            
+            <!-- Change Password Button Below Input Fields -->
+            <div class="col-12 form-group">
+                <button type="button" class="btn btn-warning" onclick="redirectToChangePassword()" 
+                        style="padding: 10px 15px; font-size: 16px; cursor: pointer; 
+                               background: linear-gradient(135deg, #71b7e6, #9b59b6); 
+                               color: white; border: none; border-radius: 5px; 
+                               transition: transform 0.3s ease, filter 0.3s ease; width: 130px;" 
+                        onmouseover="this.style.filter='brightness(1.1)'; this.style.transform='scale(1.05)';" 
+                        onmouseout="this.style.filter=''; this.style.transform='';">
+                    Change Password
+                </button>
+            </div>
+            
+            <div class="d-flex justify-content-end mt-4">
+                <!-- Back Button -->
+                <a href="{% url 'owner' %}" class="btn btn-secondary mr-3" 
+                   style="padding: 10px 15px; font-size: 14px; cursor: pointer; 
+                          background: linear-gradient(135deg, #71b7e6, #9b59b6); color: white; border: none; 
+                          border-radius: 5px; transition: transform 0.3s ease, filter 0.3s ease;width: 100px;"
+                   onmouseover="this.style.filter='brightness(1.1)'; this.style.transform='scale(1.05)';" 
+                   onmouseout="this.style.filter=''; this.style.transform='';">
+                    Back
+                </a>
+                
+                <!-- Save/Edit Button -->
+                <button type="button" class="btn btn-primary" id="edit-button" onclick="toggleEditMode()" 
+                        style="padding: 10px 15px; font-size: 14px; cursor: pointer; background: linear-gradient(135deg, 
+                               #71b7e6, #9b59b6); color: white; border: none; border-radius: 5px; transition: transform 
+                               0.3s ease, filter 0.3s ease;width: 100px;" 
+                        onmouseover="this.style.filter='brightness(1.1)'; this.style.transform='scale(1.05)';" 
+                        onmouseout="this.style.filter=''; this.style.transform='';">
+                    Edit
+                </button>
+            </div>
+            
+            
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pending Appointments</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/pendingAppointment.css' %}">
+    
+</head>
+<body>
+
+    <!-- Back Button -->
+    <a href="{% url 'owner' %}" class="back-button">Back</a>
+
+<div class="appointments-container">
+    <h2>PENDING APPOINTMENTS</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {% for appointment in appointments %}
+        <div class="appointment">
+            <div class="appointment-header">Name:{{ appointment.Name }}</div>
+            <div class="appointment-details">
+                <span><strong>Date of Appointment:</strong> {{ appointment.date }}</span>
+                <span><strong>Time:</strong> {{ appointment.time }}AM</span>
+                <span><strong>Amount:</strong> {{ appointment.amount }}</span>
+                <span><strong>Services:</strong> {{ appointment.services }}</span>
+                <span><strong>Species:</strong> {{ appointment.species }}</span>
+            </div>
+            <div class="appointment-status">Status: 
+                {% if appointment.status == 'Completed' or appointment.payment_status == 'Paid' %}
+                    <span class="status-completed">{{ appointment.status }}</span>
+                {% else %}
+                    <span>{{ appointment.status }}</span>
+                {% endif %}
+            </div>
+
+            <!-- Disable cancel button for completed or paid appointments -->
+            {% if appointment.status == 'Completed' or appointment.payment_status == 'Paid' %}
+                <button type="button" class="cancel-btn disabled" disabled>Cancel Appointment</button>
+            {% else %}
+                <button type="submit" name="cancel_appointment" value="{{ appointment.id }}" class="cancel-btn">Cancel Appointment</button>
+            {% endif %}
+        </div>
+        {% empty %}
+        <p>No pending appointments at the moment.</p>
+        {% endfor %}
+    </form>
+</div>
+
+</body>
+</html>
+    

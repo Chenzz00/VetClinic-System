@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Homepage{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="{% static 'javascript/login.js' %}"></script>
+    <script src="{% static 'javascript/homepage.js' %}"></script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+
+<body>
+   
+
+    <div class="nav-bar">
+    <h3>PET CARE</h3>
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#pets">Pets</a>
+        <a href="#services">Services</a>
+        <a href="#self_help">Self Help</a>
+        <a href="#facilities">Facilities</a>
+        <a href="#contacts">Contact</a>
+    </div>
+
+    <!-- Right Links block is here -->
+    {% block right_links %}
+    <!-- Default content can be empty or you can add basic content here -->
+    {% endblock %}
+</div>
+
+        
+        
+    
+</div>
+
+
+<section id="home" class="home-container">
+    <div class="bg-container">
+        <img class="bg-image" src="{% static 'Media/head8.jpg' %}" alt="home">
+        <div class="text-in-image">
+            <div class="walk-in-hours-container">
+                <label id="display-walk-in-hours"></label>
+            </div>
+            
+            
+
+            <div>
+                        <!-- Right Links block is here -->
+            {% block get-started %}
+            <!-- Default content can be empty or you can add basic content here -->
+            {% endblock %}
+            </div>
+            <p class="tagline">Trusted Care for Big Paws and Small</p>
+            
+        </div>
+        
+
+        {% block login-overlay %}
+        <!-- Default content can be empty or you can add basic content here -->
+        {% endblock %}
+        
+        </div>
+       
+    </div>
+</section>
+
+    <!-- Pets Section -->
+    <section id="pets">
+        <p class="custom-tagline">"Your Trusted Partner for Every Pet – Because All Animals Deserve the Best"</p>
+    <div class="carousel">
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+        
+        <div class="carousel-images">
+            <div class="carousel-slide">
+                <img src="{% static 'Media/animal_cat.jfif' %}" alt="Animal Cat">
+                <h3 style="font-size: 1.6vw">Cat-tastic care, guaranteed</h3>
+                <p class="custom-font-size">We're feline fine about feline care, with expert veterinarians and dedicated staff</p>
+            </div>
+            <div class="carousel-slide">
+                <img src="{% static 'Media/animal_dog.jpg' %}" alt="Animal Dog">
+                <h3 style="font-size: 1.6vw">Pawsitively Perfect Care!</h3>
+                <p class="custom-font-size">Happy pups, wagging tails, and expert care in every visit.</p>
+            </div>            
+            <div class="carousel-slide">
+                <img src="{% static 'Media/animal_bird.jpg' %}" alt="Animal Bird">
+                <h3 style="font-size: 1.6vw">Feathered Friends First!</h3>
+                <p class="custom-font-size">We’ll help your bird take flight with top-notch care and attention.</p>
+            </div>            
+            <div class="carousel-slide">
+                <img src="{% static 'Media/animal_rabbit.jpg' %}" alt="Animal Rabbit">
+                <h3 style="font-size: 1.6vw">Hop to health!</h3>
+                <p class="custom-font-size">Bringing bounce to every bunny's day.</p>
+            </div>            
+            <div class="carousel-slide">
+                <img src="{% static 'Media/animal_duck.jpg' %}" alt="Animal Duck">
+                <h3 style="font-size: 1.6vw">Quack-tastic Care Awaits!</h3>
+                <p class="custom-font-size">From paddling pools to pondside picnics, we ensure your feathered friends thrive!</p>
+            </div>                    
+            <div class="carousel-slide">
+                <img src="{% static 'Media/animal_hamster.avif' %}" alt="Animal Hamster">
+                <h3 style="font-size: 1.6vw">Hamsters: Small Paws, Big Joy</h3>
+                <p class="custom-font-size">Spinning, nibbling, and burrowing bliss—your hamster’s happiness is our mission!</p>
+            </div>            
+            <div class="carousel-slide">
+                <img src="{% static 'Media/animal_chameleon.avif' %}" alt="Animal Chameleon">
+                <h3 style="font-size: 1.6vw">Color Me Healthy!</h3>
+                <p class="custom-font-size">Expert care for creatures who know how to blend in – but stand out!</p>
+            </div>
+            
+        </div>
+        
+        <button class="next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+</section>
+
+    <!-- Services Section -->
+<section id="services">
+    <p class="custom-tagline">"Compassionate Care for Your Pets, Expert Services for Their Health."</p>
+    <div class="carousel">
+        <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+
+        <div class="carousel-images">
+            <div class="carousel-slide">
+                <img src="{% static 'Media/service_check_up.jpg' %}" alt="Service">
+                <h3 style="font-size: 1.6vw">Check-Up</h3>
+                <p class="custom-font-size price">Price: ₱500 - ₱1,000</p> <!-- Moved Price above the description -->
+                <p class="custom-font-size">Ensure your pet’s health with our thorough check-ups. From physical exams to vaccinations, we monitor every aspect of their well-being for early detection and prevention of health issues.</p>
+            </div>
+
+            <div class="carousel-slide">
+                <img src="{% static 'Media/service_vaccination.jfif' %}" alt="Service">
+                <h3 style="font-size: 1.6vw">Vaccination</h3>
+                <p class="custom-font-size price">Price: ₱500 - ₱1,000</p> <!-- Moved Price above the description -->
+                <p class="custom-font-size">Keep your pets protected with essential vaccinations. From puppies to senior pets, we ensure they’re shielded from preventable diseases, keeping their immunity strong and spirits high.</p>
+            </div>
+
+            <div class="carousel-slide">
+                <img src="{% static 'Media/service_neutering.jpeg' %}" alt="Service">
+                <h3 style="font-size: 1.6vw">Spaying/Neutering</h3>
+                <p class="custom-font-size price">Price: ₱2,500 - ₱4,500</p> <!-- Moved Price above the description -->
+                <p class="custom-font-size">Promote a healthier future with our spaying and neutering services. This routine procedure helps prevent health issues and reduces overpopulation, supporting your pet’s lifelong wellness.</p>
+            </div>
+
+            <div class="carousel-slide">
+                <img src="{% static 'Media/service_dental_care.jpg' %}" alt="Service">
+                <h3 style="font-size: 1.6vw">Dental Care</h3>
+                <p class="custom-font-size price">Price: ₱1,000 - ₱3,000</p> <!-- Moved Price above the description -->
+                <p class="custom-font-size">Brighten your pet’s smile with expert dental care. We tackle plaque, prevent tooth decay, and ensure fresh breath, keeping your pet’s teeth and gums in prime condition.</p>
+            </div>
+
+            <div class="carousel-slide">
+                <img src="{% static 'Media/service_emergency_care.jpg' %}" alt="Service">
+                <h3 style="font-size: 1.6vw">Emergency Care</h3>
+                <p class="custom-font-size price">Price: ₱2,000 - ₱5,000</p> <!-- Moved Price above the description -->
+                <p class="custom-font-size">Ready for urgent care when your pet needs it most. Our skilled team provides rapid, compassionate treatment, ensuring your pet is in safe hands during unexpected health crises.</p>
+            </div>
+
+            <div class="carousel-slide">
+                <img src="{% static 'Media/service_diagnostics.jpg' %}" alt="Service">
+                <h3 style="font-size: 1.6vw">Diagnostics</h3>
+                <p class="custom-font-size price">Price: ₱1,500 - ₱3,500</p> <!-- Moved Price above the description -->
+                <p class="custom-font-size">Pinpoint health concerns with advanced diagnostics. From lab tests to imaging, we provide thorough assessments to determine the best care for your pet’s well-being.</p>
+            </div>
+        </div>
+
+        <button class="next" onclick="moveSlide(1)">&#10095;</button>
+    </div>
+</section>
+
+
+    <!-- Self Help Section -->
+<section id="self_help">
+    <p class="custom-tagline">"Essential Pet Tips & Tricks for Every Pet Parent."</p>
+    <div id="carouselExampleIndicators" class="carousel slide bs-carousel" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            
+            <!-- Add more indicators as needed for additional slides -->
+        </div>
+        
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="d-flex justify-content-center">
+                    <iframe class="video-size" src="https://www.youtube.com/embed/g1XJsc4lekw" 
+                        title="Just a finger to befriend a cat😎 #facts" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="d-flex justify-content-center">
+                    <iframe class="video-size" src="https://www.youtube.com/embed/0qvoiLLcFtk" 
+                        title="Second video title" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="d-flex justify-content-center">
+                    <iframe class="video-size" src="https://www.youtube.com/embed/vzHgBqPZ2Fw" 
+                        title="Second video title" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+            <!-- Add more .carousel-item elements as needed for additional slides -->
+        </div> 
+    
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</section>
+
+
+    <!-- Facilities Section -->
+    <p class="custom-tagline">"Every Pet Deserves the Best – Experience the Difference with Our Facilities."</p>
+    <section id="facilities">
+        <div id="facilities-carousel" class="carousel slide bs-carousel" data-bs-ride="carousel">
+            <!-- Carousel Indicators -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#facilities-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#facilities-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#facilities-carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#facilities-carousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#facilities-carousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                <button type="button" data-bs-target="#facilities-carousel" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                <button type="button" data-bs-target="#facilities-carousel" data-bs-slide-to="6" aria-label="Slide 7"></button>
+            </div>
+    
+            <!-- Carousel Inner -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{% static 'Media/Reception_Desk.jpg' %}" alt="Reception Desk">
+                    <p class="custom-font-size">Reception Desk:<br> Welcome to our clinic. Our friendly staff is here to assist with appointments, queries, and make your visit as smooth as possible.</p>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'Media/waiting_Area.jfif' %}" alt="Waiting Area">
+                    <p class="custom-font-size">Waiting Area:<br> Relax in our comfortable waiting area while we prepare everything for your pet’s appointment. Enjoy a calm environment designed to ease both pets and owners.</p>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'Media/Consultation_Room.jpg' %}" alt="Consultation Room">
+                    <p class="custom-font-size">Consultaion Room:<br> Our consultation room is equipped for comprehensive pet assessments, ensuring detailed, one-on-one attention to address all health concerns.</p>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'Media/treatment_room.jfif' %}" alt="Treatment Room">
+                    <p class="custom-font-size">Treatment Room:<br>From routine treatments to minor procedures, our treatment room is prepared to provide quality care in a safe and hygienic setting.</p>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'Media/x-ray_area.jpg' %}" alt="X-Ray Area">
+                    <p class="custom-font-size">X-Ray Area:<br> Advanced imaging technology helps us diagnose and treat conditions with precision. Our x-ray facilities are designed for safe, efficient examinations.</p>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'Media/isolation_area.jpg' %}" alt="Isolation Area">
+                    <p class="custom-font-size">Isolation Area:<br> For pets needing specialized care or quarantine, our isolation area provides a secure space to manage contagious conditions and ensure patient safety.</p>
+                </div>
+                <div class="carousel-item">
+                    <img src="{% static 'Media/emergency_area.jpg' %}" alt="Emergency Area">
+                    <p class="custom-font-size">Emergency Area:<br> In emergencies, every second counts. Our emergency area is equipped to handle urgent care needs swiftly and effectively.</p>
+                </div>
+            </div>
+    
+            <!-- Carousel Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#facilities-carousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#facilities-carousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+    
+    
+
+<!-- Contacts Section -->
+<section id="contacts" style="display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 20px;">
+    <br><br><br>
+    <p class="custom-tagline">"Got Questions? We’re Just a Call, Click, or Visit Away!"</p>
+    <div class="map-container" style="width: 90%; min-height: 400px; aspect-ratio: 16 / 9; position: relative; margin: 0 auto; overflow: hidden;">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.036042570196!2d144.9646893156829!3d-37.80499497975178!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0b7b53cf%3A0x5045675218cee9e!2s10%20Thames%20St%2C%20Richmond%20VIC%205120%2C%20Australia!5e0!3m2!1sen!2sus!4v1697491475165!5m2!1sen!2sus"
+            class="map-frame" allowfullscreen="" loading="lazy" style="width: 100%; height: 100%; border: 0;">
+        </iframe>
+    </div>
+</section>
+
+<section id="contact-details" style="display: flex; flex-direction: row; justify-content: center; gap: 20px; padding: 20px;">
+    <!-- Column 1: Contact Information -->
+    <div class="contact-info" style="width: 90%; max-width: 800px; text-align: center; margin-top: 20px;">
+        <h3>Contact Us</h3>
+        <p>Contact Number: +61 3 9320 8700</p>
+        <p>Email: info@vetclinic.com</p>
+        <p>Address: 10 Thames St, Richmond, VIC 5120, Australia</p>
+    </div>
+</section>
+
+
+
+    <script>
+        window.csrfToken = "{{ csrf_token }}";  
+        window.loginUrl = "{% url 'index' %}"; 
+        window.ownerUrl = "{% url 'owner' %}"; 
+    </script>
+
+
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+
+{% block content %}
+    {% endblock %}
+    
+</body>
+</html> 
+
+
+
+
+
+

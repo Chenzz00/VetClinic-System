@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRANSACTION HISTORY</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/transactionHistory.css' %}">
+    <style>
+        .profile-dropdown {
+            
+            right: 5px;
+            top: -50px;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 800px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .popup h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .popup .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Transaction History Admin Window</h1>
+        <div class="nav-links">
+            <nav>
+                <ul>
+                    <li><a href="{% url 'admin' %}">Appointment Schedule</a></li>
+                    <li><a href="{% url 'adaccount' %}">Account History</a></li>
+                    <li><a href="{% url 'trans' %}">Transaction History</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="header-right">
+            <details class="profile-dropdown">
+                <summary>
+                    <img class="profile-icon" src="{% static 'Media/icons.png' %}" alt="Profile Icon">
+                </summary>
+                <div class="profile-dropdown-content">
+                    <ul class="profile-menu">
+                        <li><a href="{% url 'logout' %}"><span class="menu-icon"></span> Logout</a></li>
+                    </ul>
+                </div>
+            </details>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <main>
+        <div class="container">
+            <h2 class="records-title">Transaction Details</h2>
+
+            <!-- Transaction Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Account</th>
+                        <th>Service</th>
+                        <th>Pet Specie</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for schedule in schedules %}
+                    <tr>
+                        <td>{{ schedule.date }}</td>
+                        <td>{{ schedule.amount }}</td>
+                        <td>{{ schedule.Name }}</td>
+                        <td>{{ schedule.services }}</td>
+                        <td>{{ schedule.species }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="no-schedules">No appointments scheduled</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+</html>
