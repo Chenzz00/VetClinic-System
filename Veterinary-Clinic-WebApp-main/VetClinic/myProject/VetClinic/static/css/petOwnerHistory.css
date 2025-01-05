@@ -1,0 +1,106 @@
+body {
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #B4D9FF, #FDEECF); /* Gradient background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+}
+
+.history-container {
+    width: 80%;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+.history-container p {
+    text-align: center;
+    font-size: 18px; /* Optional, adjust if needed */
+    color: #555; /* Optional, adjust if needed */
+}
+
+
+.transaction {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.transaction-header {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.transaction-details {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.transaction-details span {
+    font-size: 18px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.transaction-status {
+    font-size: 14px;
+    color: #ff9800; /* Default color for Pending */
+    font-weight: bold;
+}
+
+.status-completed {
+    color: #4CAF50;
+}
+
+/* Back Button styling */
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #71b7e6, #9b59b6);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease, transform 0.2s ease;
+    display: inline-block; /* Makes the whole button area clickable */
+    text-decoration: none; /* Removes underline from the link */
+}
+
+.back-button:hover {
+    background-color: #4a8fd2;
+    transform: scale(1.05);
+}
+
+.back-button:active {
+    background-color: #3f7ea6;
+}
+
+.back-button:focus {
+    outline: none;
+}
+

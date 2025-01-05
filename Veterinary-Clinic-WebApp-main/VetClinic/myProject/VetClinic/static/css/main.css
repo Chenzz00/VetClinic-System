@@ -1,0 +1,715 @@
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #B4D9FF, #FDEECF);
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Ensure the section has relative positioning */
+section {
+    position: relative;
+}
+
+/* Make images responsive */
+.img_mail, .profile-icon, .notification-icon, 
+.lock-image, .cat-image, .checkup-image, 
+.gmap-image, .consultation-room-image {
+    width: 100%; /* Adjust to take full width of their parent */
+    max-width: 200px; /* Set maximum width */
+    height: auto; /* Maintain aspect ratio */
+    object-fit: cover; /* Ensures the image fits inside the specified dimensions */
+}
+
+/* For specific images that need smaller sizes */
+.profile-icon, .notification-icon {
+    max-width: 40px;
+    margin-left: -20px;
+}
+
+
+.lock-image {
+    max-width: 50px;
+}
+
+
+
+/* TEXTS */
+.custom-font-size{
+    font-size: 1.5vw; 
+    line-height: 1.5;
+    color: #333;
+    font-family: Helvetica Neue, sans-serif;
+    width: 70%;
+    
+}
+.custom-tagline {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    font-size: 3vw;            
+    font-weight: 600;             
+    color: #2a7d6f;               
+    text-align: center;          
+    padding: 2vw;               
+    background: linear-gradient(45deg, #e0f2f1, #b2dfdb); 
+    border-radius: 10px;         
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    margin: 20px auto;            
+    max-width: 90%;     
+}
+
+
+
+
+
+
+
+/* BUTTONS */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 2vw;
+    font-weight: bold;
+}
+/* Navigation bar */
+.nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 65px;
+    background-color: rgba(0, 0, 0, 0.5); /* 70% opacity */
+    padding: 0 2vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 5;
+}
+
+.nav-bar h3 {
+    color: white; /* White text color */
+    font-weight: bold; /* Bold text */
+    margin: 0; /* Remove any default margin */
+    font-size: 2.2rem; /* Adjust font size as needed */
+}
+
+.nav-bar .profile-button {
+    background-color: #ffffff;
+    color: #000000;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    padding: 0.5rem 1rem; 
+}
+
+/* Nav links on the right */
+.nav-links {
+    display: flex;
+    gap: 2vw; /* Space between links */
+    margin-left: auto; /* Push the links to the right */
+}
+
+.nav-bar a {
+    text-decoration: none;
+    color: #ffffff; 
+    padding: 1vw 1.5vw; 
+    font-size: 1.5vw;
+    position: relative; /* Required for the underline */
+}
+
+/* Add underline on hover */
+.nav-bar a:hover {
+    color: #b3e5fc; 
+    border-radius: 5px;
+    text-decoration: none; /* Ensure no default underline */
+}
+
+/* Create custom underline effect */
+.nav-bar a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 3px; /* Thickness of the underline */
+    background-color: black; /* Color of the underline */
+    transition: width 0.3s ease; /* Smooth transition for the underline */
+}
+
+/* Show the underline on hover */
+.nav-bar a:hover::after {
+    width: 100%;
+}
+
+/* Keep underline when link is clicked or focused */
+.nav-bar a:focus::after,
+.nav-bar a:active::after {
+    width: 100%; /* Keep the underline visible */
+    transition: none; /* No transition effect on active state */
+}
+
+.nav-bar a:focus,
+.nav-bar a:active {
+    color: #b3e5fc; /* Optional: Keep the hover color when active */
+    text-decoration: none; /* Remove default underline */
+}
+
+/* Right-side links */
+.right-links {
+    display: flex;
+    gap: 2vw;
+    align-items: center;
+    margin-right: 5vw; 
+}
+
+.right-links .profile-dropdown .dropdown_btn {
+    padding: 3%;
+}
+
+.right-links .profile-dropdown a {
+    color: black;
+}
+
+
+
+
+
+
+
+
+
+
+
+:root {
+    --dropdown-margin-top: 10px; /* Adjust this value to set the distance below the trigger */
+    --dropdown-right: 10px; /* Adjust this value to set the distance from the right */
+}
+
+
+/* Profile Dropdown Styling */
+.profile-dropdown ul {
+    background-color: #f1f1f1; /* Soft light gray background */
+  
+    position: absolute;
+    margin-top: var(--dropdown-margin-top);
+    padding: 10px 20px; /* Adjusted padding for balance */
+    z-index: 3;
+    width: 250px;
+    max-height: 300px;
+    overflow-y: auto;
+    right: calc(var(--dropdown-right) + 10px);
+    line-height: 2;
+    font-size: 0.9em;
+    border-radius: 8px; /* More rounded corners for modern appeal */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/* Styling for dropdown list items */
+.right-links .profile-dropdown li {
+    color: #333; /* Darker text for visibility */
+    padding: 8px 0; /* Adequate padding for better clickability */
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer; /* Change cursor to indicate it's clickable */
+}
+
+/* Hover effect for the entire list item */
+.right-links .profile-dropdown li:hover {
+    background-color: #1e3d58; /* Change background color on hover */
+    color: #fff; /* Change text color to white on hover */
+}
+
+/* Styling for the summary text */
+.right-links summary {
+    color: #3b3b3b; /* Slightly darker gray for the summary text */
+    cursor: pointer;
+    font-size: 1em;
+    transition: color 0.3s ease;
+}
+
+/* Ensure no extra hover effect for <a> tag */
+.right-links .profile-dropdown li a {
+    color: inherit; /* Inherit color from parent <li> */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.right-links .profile-dropdown li a:hover {
+    background-color: transparent; /* No background color change */
+    color: inherit; /* Keep the color unchanged */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* CSS Carousel*/
+.carousel {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+    margin-left: auto; 
+    margin-right: auto; 
+    padding: 4%;
+}
+.carousel-images {
+    display: flex;
+    transition: transform 0.5s ease;
+    
+}
+.carousel-slide {
+    min-width: 33.33%;
+    box-sizing: border-box;
+    padding: 0;
+    transition: opacity 0.5s ease;
+    margin-right: -7vw;
+}
+.carousel img {
+    width: 70%;
+    height: 60%;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 0;
+    margin: 0.5vw;
+}
+.carousel .prev,
+.carousel .next {
+    background-color:rgba(74, 122, 153, 0.5);
+    color: rgb(255, 255, 255);
+    width: 7%; 
+    height: 15%;
+    border-radius: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 4;
+    margin-left: 1.5vw; 
+    margin-right: 1.5vw;
+}
+.carousel .carousel-control-prev,
+.carousel .prev {
+    left: 0; 
+}
+.carousel .carousel-control-next,
+.carousel .next {
+    right: 0; 
+}
+.carousel .prev:hover,
+.carousel .next:hover {
+    background-color: #4a7a99; 
+} 
+
+
+
+
+
+/* Button Styling */
+button {
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 0.5vw; /* Reduced padding */
+    font-size: 0.9vw; /* Reduced font size */
+    width: 120px;
+}
+
+button:hover {
+    background-color: transparent;
+}
+button:active {
+    transform: scale(0.98);
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+
+
+
+
+
+/* BOOTSTRAP Carousel */
+.bs-carousel {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin-left: auto; 
+    margin-right: auto; 
+    padding: 0;
+}
+.carousel-item {
+    display: flex;
+    justify-content: center; /* Centers the video */
+    align-items: center;     /* Centers the content vertically */
+    transition: opacity 1s ease-in-out;
+    object-fit: cover;
+    margin-right: 0;
+    padding: 0;
+    margin-bottom: 2%;
+}
+.carousel-item.active {
+    opacity: 1;
+}
+.bs-carousel .carousel-item iframe {
+    width: 100%;        
+    height: 35vw;       
+}
+.bs-carousel .carousel-control-prev,
+.bs-carousel .carousel-control-next,
+#facilities-carousel .carousel-control-prev,
+#facilities-carousel .carousel-control-next {
+    background-color: #4a7a99;
+    color: white;
+    height: 15%;
+    width: 7%;
+    border-radius: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 4;
+    margin-left: 1.5vw;  /* Responsive left spacing */
+    margin-right: 1.5vw;
+    top: 45%;
+}
+.bs-carousel .carousel-indicators,
+.carousel .carousel-indicators,
+#facilities .facilities-indicators {
+    display: block;
+    position: center;
+    width: 100%;
+    text-align: center;
+    bottom: -1vw;
+    padding-left: 0; /* remove padding */
+    margin-left: 0;
+    z-index: 4;
+}
+.bs-carousel .carousel-indicators button,
+.carousel .carousel-indicators button,
+#facilities .facilities-indicators button{
+    background-color: rgb(250, 250, 250); 
+    border: 2px solid #4a7a99; 
+    width: 10vw; 
+    height: 1vw; 
+    margin: 0 5px; 
+}
+.bs-carousel .carousel-indicators .active,
+.carousel .carousel-indicators button,
+#facilities .facilities-indicators .active {
+    background-color: #4a7a99;
+}
+
+
+#facilities-carousel .bs-carousel{
+    height: 100vh; 
+}
+
+
+#facilities-carousel .carousel-item img {
+    width: 100%; 
+    height: 100vh;  
+    object-fit: cover;
+    padding: 0;
+    margin: 0;
+     /* remove border */
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    margin-bottom: 2%;
+}
+#facilities-carousel .carousel-item.active {
+    opacity: 1;
+}
+
+#facilities-carousel .custom-font-size {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+
+    height: 25%;
+    width: 100%;
+    left: 0;
+    font-size: 2vw;
+    
+    padding: 1%; 
+    margin-bottom: 2%;
+    line-height: 1.5;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    z-index: 2;
+}
+
+
+
+/* Media query for larger screens */
+@media (min-width: 1920px) {
+    .custom-font-size {
+        font-size: 24px;
+    }
+
+    .nav-bar a {
+        font-size: 22px;
+    }
+
+    .nav-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+    }
+
+    .nav-links a {
+        margin-right: 15px;
+    }
+
+    .right-links form {
+        display: flex;
+        align-items: center;
+    }
+
+   
+
+    .right-links button {
+        padding: 5px ;
+        font-size: 14px;
+        margin-left: 10px; /* Shift slightly to the right */
+    }
+
+
+    .spacer {
+        margin-bottom: 20px; /* Adjust spacing as needed */
+    }
+
+    .editable {
+        border: 1px solid #ccc; /* Add a border to editable fields for clarity */
+        padding: 5px;           /* Add some padding */
+        border-radius: 4px;     /* Round the corners */
+    }
+    
+
+    .close-btn {
+        background-color: #f44336;
+        color: white;
+        padding: 5px 10px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }   
+        /* Basic styling */
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    /* Form and table styling */
+    .slot-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    .slot-table th, .slot-table td {
+        padding: 8px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+    /* For VetWindow */
+    .nav-links a {
+        text-decoration: none;
+        padding: 8px;
+    }
+    
+    .nav-links a.active {
+        font-weight: bold;
+        color: blue;
+    }
+
+}
+
+
+
+
+
+
+
+.back-button {
+    position: absolute;
+    background-color: #2980b9;
+    left: 20px;
+    top: 20px;
+}
+
+
+/* Home Section Styling */
+#home {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Keyframes for blinking effect */
+@keyframes blink {
+    0% {
+        opacity: 1; /* Fully visible */
+    }
+    50% {
+        opacity: 0; /* Invisible at 50% */
+    }
+    100% {
+        opacity: 1; /* Fully visible again */
+    }
+}
+
+
+
+
+
+.bg-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* Background image with better scaling */
+.bg-image {
+    width: 100vw;
+    height: 100vw;
+    max-height: 100vh;
+    object-fit: cover;
+}
+
+.text-in-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    z-index: 1;
+    
+}
+
+
+.tagline {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
+    margin-bottom: 20px;
+    margin-top: 30px;
+    position: relative; /* Ensures control over placement */
+    left: -538px; /* Moves the tagline to the left */
+    
+    
+}
+
+.walk-in-hours-container {
+    font-size: 2rem; /* Adjusted text size */
+    font-weight: 700;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px 40px; /* Adjusted padding for better fit */
+    border-radius: 30px;
+    margin-bottom: 0px;
+    overflow: hidden;
+    position: relative; /* Ensures control over placement */
+    left: -500px; /* Moves the container to the left */
+    
+    width: 70%; /* Keeps the container width at 50% */
+    height: 200px; /* Adjusted container height */
+
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+#display-walk-in-hours {
+    color: #ffcc00;
+    font-size: 2.5rem; /* Adjusted text size */
+    font-weight: bold;
+    white-space: normal; /* Allow text wrapping */
+    text-align: center; /* Center the text */
+    width: 100%; /* Ensure it spans the container width */
+    line-height: 1.5; /* Add spacing between lines */
+}
+
+.get-started {
+    text-align: left; /* Align text to the left */
+    margin-top: 30px;
+}
+
+.get-started-button {
+    background-image: linear-gradient(90deg, #1c1c1c, transparent); /* Gradient background */
+    color: #fff;
+    font-size: 0.9rem; /* Match the original font size */
+    font-weight: 400; /* Original font weight */
+    text-transform: uppercase; /* Keep the uppercase style */
+    letter-spacing: 1.2px; /* Original letter spacing */
+    line-height: 14px; /* Maintain the original line height */
+    padding: 10px 25px; /* Merge padding styles */
+    border: 2px solid black; /* Add the black outline */
+    border-radius: 0.25rem; /* Original border radius */
+    clip-path: polygon(0 0, 0 0, 100% 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 100%);
+    -webkit-clip-path: polygon(0 0, 0 0, 100% 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 100%);
+    cursor: pointer; /* Add hover cursor */
+    transition: all 0.3s ease-in; /* Smooth transition */
+    margin-left: -500px; /* Align button to the left */
+    width: 30%;
+    overflow: hidden;
+    height: 55px;
+}
+
+.get-started-button:hover {
+    background-color: rgba(0, 0, 0, 0.7); /* Keep hover effect */
+    padding-left: 30px; /* Hover padding left adjustment */
+    padding-right: 30px; /* Hover padding right adjustment */
+    transition: all 0.3s ease-in; /* Ensure transition */
+}
+
+
+.walk-in-label .default-text {
+    color: #ffd401; /* Yellow color for default text */
+    font-weight: bold; /* Make it bold */
+}
+
+#display-walk-in-hours {
+    color: #ffd401; /* Yellow color for dynamic content */
+    font-weight: bold;
+}
+
+.walk-in-text {
+    color: #ffd401; /* Yellow color for the second line */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.highlight {
+    color: #ffd401; /* Highlight color for time range */
+    font-weight: bold;
+}

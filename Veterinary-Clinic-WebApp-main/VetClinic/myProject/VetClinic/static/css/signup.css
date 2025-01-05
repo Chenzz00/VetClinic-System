@@ -1,0 +1,201 @@
+/* signup.css */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f3f4f6; /* Light neutral background */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #495057; /* Darker text color for contrast */
+}
+
+form {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); /* Softer, larger shadow for depth */
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    margin: 20px;
+    border: 1px solid #dee2e6; /* Light border around the form */
+}
+
+h2 {
+    color: #0d6efd; /* Blue accent color for the heading */
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #6c757d; /* Subtle light gray */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"] {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 20px;
+    border: 1px solid #ced4da; /* Light gray border */
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    background-color: #f9f9f9; /* Light gray background for inputs */
+    transition: all 0.3s ease;
+}
+
+/* Focus state with color accent */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="password"]:focus {
+    border-color: #0d6efd; /* Blue border on focus */
+    background-color: #ffffff; /* White background on focus */
+    outline: none;
+    box-shadow: 0 0 5px rgba(13, 110, 253, 0.5); /* Blue glow effect on focus */
+}
+
+/* Button with vibrant color */
+button {
+    background-color: #0d6efd; /* Bright blue for button */
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover and active states for the button */
+button:hover {
+    background-color: #0056b3; /* Darker blue when hovered */
+    transform: translateY(-2px); /* Lift effect */
+    box-shadow: 0 4px 10px rgba(13, 110, 253, 0.3); /* Slight blue shadow on hover */
+}
+
+button:active {
+    transform: translateY(1px); /* Slight push effect on click */
+}
+
+/* Small text styling */
+small {
+    display: block;
+    margin-top: -12px;
+    font-size: 0.85rem;
+    color: #868e96; /* Light gray for small text */
+}
+
+/* Address container layout */
+.address-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.address-container div {
+    width: 100%;
+}
+
+.address-container input {
+    width: 100%;
+}
+
+.address-container input[type="text"] {
+    margin-bottom: 20px;
+}
+
+/* Subtle Hover Effect on Inputs */
+input[type="text"]:hover,
+input[type="email"]:hover,
+input[type="tel"]:hover,
+input[type="password"]:hover {
+    border-color: #0d6efd; /* Blue hover border */
+    background-color: #ffffff; /* Background white when hovered */
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    form {
+        padding: 30px;
+        max-width: 90%;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+    }
+
+    .address-container {
+        grid-template-columns: 1fr 1fr; /* Two columns on medium screens */
+    }
+
+    .address-container input {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    form {
+        padding: 25px;
+        max-width: 90%;
+        margin: 20px 0;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .address-container {
+        grid-template-columns: 1fr; /* Stack address fields on small screens */
+    }
+
+    .address-container input {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    form {
+        padding: 15px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"] {
+        padding: 12px;
+    }
+
+    button {
+        font-size: 1rem;
+    }
+}
+
+/* Position the back button in the upper left corner */
+.back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 14vb;
+}
+
+.back-button button {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+}

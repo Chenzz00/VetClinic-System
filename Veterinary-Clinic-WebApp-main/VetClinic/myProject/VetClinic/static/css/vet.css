@@ -1,0 +1,198 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    display: flex;
+    justify-content: space-between; /* This separates the left and right items */
+    align-items: center;
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px;
+    position: relative;
+}
+
+.header-left {
+    flex-grow: 1; /* Allow the title section to grow */
+    text-align: center; /* Center-align the content */
+}
+
+.header-left h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.header-left h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: normal;
+}
+
+.header-right {
+    position: absolute;
+    right: 20px; /* Align the profile icon to the right */
+}
+
+.profile-dropdown {
+    position: relative;
+}
+
+.profile-dropdown summary {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.profile-dropdown img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+
+
+.profile-dropdown ul {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.profile-dropdown:hover ul {
+    display: block;
+}
+
+.profile-dropdown ul li {
+    list-style: none;
+    padding: 8px 10px;
+}
+
+.profile-dropdown ul li a {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-family: Verdana, sans-serif;
+    
+}
+
+.profile-dropdown ul li a:hover {
+    background: #f0f0f0;
+}
+
+.menu-icon {
+    margin-right: 10px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+}
+
+.status-indicator {
+    margin-left: auto;
+    font-size: 14px;
+    font-weight: bold;
+    color: red;
+}
+
+
+/* Table Styles */
+table {
+    width: 80%;
+    max-width: 1200px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+th {
+    background-color: #3498db; /* Apply the desired color */
+    color: white; /* Ensure text stands out */
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+.no-schedules td {
+    text-align: center;
+    padding: 20px;
+}
+
+.records-section {
+    padding: 20px;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 1200px;
+}
+
+.records-title {
+    font-size: 1.8rem;
+    color: #333;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+button[disabled] {
+    background-color: #d3d3d3;
+    cursor: not-allowed;
+}
+
+
+
+
+.appointment-container {
+    width: 300px; /* Set your desired width */
+    height: calc(100vh - 60px); /* Adjust according to your header height */
+    overflow-y: auto; /* Allows scrolling */
+    border-right: 1px solid #ccc;
+    position: fixed;
+    left: 0;
+    top: 60px; /* Adjust according to your header height */
+    margin-left: 20px; /* Margin or gap to prevent overlap with the header */
+    border: 2px solid #000;
+}
+.text-box {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+

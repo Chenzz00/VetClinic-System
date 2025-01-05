@@ -1,0 +1,99 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Sidebar styles */
+.sidebar {
+    height: 100vh; /* Full height */
+    width: 250px; /* Sidebar width */
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #333;
+    padding-top: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+    text-align: center;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    padding: 8px;
+}
+
+.sidebar ul li a:hover {
+    background-color: #575757;
+}
+
+/* Content area styles */
+.content {
+    margin-left: 250px; /* Make space for the sidebar */
+    padding: 20px;
+}
+
+/* Back button styles */
+.back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: auto;
+}
+
+.back-button button {
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 0.5vw;
+    font-size: 0.9vw;
+    width: 120px;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+}
+
+.back-button button:hover {
+    background-color: #2980b9;
+}
+
+.back-button button:active {
+    transform: scale(0.98);
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Appointment Form Styles */
+.appointment-container {
+    padding: 20px;
+}
+
+.appointment-container .section-title {
+    font-size: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+#submit-button {
+    background-color: #2980b9;
+    color: white;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#submit-button:hover {
+    background-color: #1c6ea4;
+}
