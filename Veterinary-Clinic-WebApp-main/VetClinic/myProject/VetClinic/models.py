@@ -1,9 +1,11 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+
 from pytz import timezone as pytz_timezone
 from django.db import models
 from django.utils import timezone
 import pytz
 from zoneinfo import ZoneInfo 
+from datetime import datetime
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -48,6 +50,23 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         
         super().save(*args, **kwargs)
 
+
+class Schedule(models.Model):
+    account = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  # Link to Accounts
+    Name = models.CharField(max_length=100)
+    date = models.DateField()
+    time = models.CharField(max_length=200)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    services = models.CharField(max_length=100)
+    species = models.CharField(max_length=50)
+    status = models.CharField(max_length=50, blank=True, null=True)
+    payment_status = models.CharField(max_length=50, blank=True, null=True)
+    marked_by_email = models.EmailField()
+    def __str__(self):
+        # Format time without a.m./p.m.
+        formatted_time = self.time.strftime('%H:%M')  # 24-hour format (e.g., 14:30)
+        return f"{self.Name} - {self.date}-{formatted_time} - {self.marked_by_email}"
+
 class Diagnosis(models.Model):
     owner_name = models.CharField(max_length=100)
     pet_name = models.CharField(max_length=100)
@@ -71,40 +90,29 @@ class AvailableSlot(models.Model):
         return f"Available Time: {self.available_slot_time}, Slots Left: {self.slots_left}"
 
 
-from datetime import datetime
 
-class Schedule(models.Model):
-    account = models.ForeignKey(CustomUser, on_delete=models.CASCADE)  # Link to Accounts
-    Name = models.CharField(max_length=100)
-    date = models.DateField()
-    time = models.CharField(max_length=200)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    services = models.CharField(max_length=100)
-    species = models.CharField(max_length=50)
-    status = models.CharField(max_length=50, blank=True, null=True)
-    payment_status = models.CharField(max_length=50, blank=True, null=True)
 
-    def __str__(self):
-        # Format time without a.m./p.m.
-        formatted_time = self.time.strftime('%H:%M')  # 24-hour format (e.g., 14:30)
-        return f"{self.Name} - {self.date} {formatted_time}"
+
 
 
     
 class species(models.Model):
-    animal = models.CharField(max_length=30)
+    animal = models.CharField(max_length=255)
+    created_by_email = models.EmailField()  # Store the email of the admin who created it
+
    
     def __str__(self):
-        return f"{self.animal}"
+        return f"{self.animal},{self.created_by_email}"
     
 class services(models.Model):
-    services = models.CharField(max_length=30)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)  # Service amount
+    services = models.CharField(max_length=255)
+    amount = models.FloatField()
+    created_by_email = models.EmailField()  # Store the email of the admin who created it
    
    
    
     def __str__(self):
-        return f"{self.services}"
+        return f"{self.services},{self.created_by_email}"
     
 
 
