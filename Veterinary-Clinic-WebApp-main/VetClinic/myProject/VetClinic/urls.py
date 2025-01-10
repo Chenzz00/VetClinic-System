@@ -25,5 +25,8 @@ urlpatterns = [
      path('email-sent/', views.email_sent, name='email_sent'),
     path('diagnosis/', views.diagnosis, name= 'diagnosis'),
     path('pending-appointment/', views.PendingAppointment, name= 'pAppointment'),
+    path('generate_report/', views.generate_report, name='generate_report'),
+    path('verify-email/<uidb64>/<token>/', views.verify_email, name='verify_email'),
+
     
 ]
