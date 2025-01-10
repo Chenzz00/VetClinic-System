@@ -23,10 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-d^t+$+n)$f*_k9yn6bq((c%*fj&pi-)1c12-x065-=!5*78p5x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Update this to your domain or IP when deploying
-ALLOWED_HOSTS = ['chenzz.pythonanywhere.com']
+ALLOWED_HOSTS = []
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
@@ -50,6 +50,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    
 ]
 
 ROOT_URLCONF = 'myProject.urls'
@@ -65,6 +67,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                
             ],
         },
     },
@@ -152,5 +156,8 @@ USE_TZ = True
 
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
-    messages.SUCCESS: 'success',
+    
 }
+
+
+
