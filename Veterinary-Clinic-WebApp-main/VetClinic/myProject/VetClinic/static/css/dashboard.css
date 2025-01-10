@@ -12,14 +12,18 @@ body {
     overflow-x: hidden;
 }
 
-
-
 /* Styling for the logo image */
 .logo-icon {
-    height: 300px; /* Adjust height for the logo as needed */
+    height: 40vh; /* Adjust height for the logo as needed */
     width: auto; /* Maintain aspect ratio */
+    min-height: 180px;
+    transition: transform 0.3s ease;
 }
 
+.logo-icon:hover {
+    transform: scale(1.1);
+    
+}
 
 
 .brand-name a {
@@ -180,6 +184,9 @@ body {
     .navigation button {
         padding: 10px 15px;
         margin: 5px;
+    }
+    .note    {
+        width: 2vw;
     }
 
     

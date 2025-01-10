@@ -1,4 +1,3 @@
-
 body {
     font-family: 'Arial', sans-serif;
     background: linear-gradient(to right, #B4D9FF, #FDEECF);
@@ -6,14 +5,13 @@ body {
     padding: 0;
 }
 
-
 /* Ensure the section has relative positioning */
 section {
     position: relative;
 }
 
 /* Make images responsive */
-.img_mail, .profile-icon, .notification-icon, 
+.img_mail, .profile-icon, 
 .lock-image, .cat-image, .checkup-image, 
 .gmap-image, .consultation-room-image {
     width: 100%; /* Adjust to take full width of their parent */
@@ -23,22 +21,57 @@ section {
 }
 
 /* For specific images that need smaller sizes */
-.profile-icon, .notification-icon {
-    max-width: 40px;
-    margin-left: -20px;
+
+
+
+
+.profile-dropdown summary {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    text-align: center;
 }
 
+.right-links {
+    display: flex;
+    align-items: center; 
+    margin-right: 5vw;
+    justify-content: flex-end;
+}
+/* Adjust the profile-dropdown and loader to align horizontally */
+
+.loader, .profile-icon{
+    
+    align-items: left; /* Vertically center the items */
+    justify-content: space-between; /* Space between the loader and the profile icon */
+}
+
+/* Adjust the profile icon styles */
+.profile-icon {
+    width: auto;
+    height: 40px;
+    position: absolute;
+    top:20%
+}
+
+/* Adjust loader positioning */
+.right-links .loader img {
+    width: auto;
+    height: 40px;
+    position: relative;
+    justify-content: flex-end;
+    
+}
 
 .lock-image {
     max-width: 50px;
 }
 
-
-
 /* TEXTS */
 .custom-font-size{
     font-size: 1.5vw; 
-    line-height: 1.5;
+    line-height: 1.3;
     color: #333;
     font-family: Helvetica Neue, sans-serif;
     width: 70%;
@@ -57,12 +90,6 @@ section {
     margin: 20px auto;            
     max-width: 90%;     
 }
-
-
-
-
-
-
 
 /* BUTTONS */
 .close {
@@ -84,27 +111,27 @@ section {
     justify-content: space-between;
     align-items: center;
     z-index: 5;
+    
 }
 
-.nav-bar h3 {
-    color: white; /* White text color */
-    font-weight: bold; /* Bold text */
-    margin: 0; /* Remove any default margin */
-    font-size: 2.2rem; /* Adjust font size as needed */
+.logo{
+    width: auto;
+    height: 80px;
 }
 
 .nav-bar .profile-button {
     background-color: #ffffff;
     color: #000000;
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-    padding: 0.5rem 1rem; 
+
 }
 
 /* Nav links on the right */
 .nav-links {
     display: flex;
     gap: 2vw; /* Space between links */
-    margin-left: auto; /* Push the links to the right */
+    margin-right: 10%;
+    font-size: 1.5rem;
 }
 
 .nav-bar a {
@@ -113,6 +140,7 @@ section {
     padding: 1vw 1.5vw; 
     font-size: 1.5vw;
     position: relative; /* Required for the underline */
+    white-space: nowrap;
 }
 
 /* Add underline on hover */
@@ -153,12 +181,7 @@ section {
 }
 
 /* Right-side links */
-.right-links {
-    display: flex;
-    gap: 2vw;
-    align-items: center;
-    margin-right: 5vw; 
-}
+
 
 .right-links .profile-dropdown .dropdown_btn {
     padding: 3%;
@@ -167,16 +190,6 @@ section {
 .right-links .profile-dropdown a {
     color: black;
 }
-
-
-
-
-
-
-
-
-
-
 
 :root {
     --dropdown-margin-top: 10px; /* Adjust this value to set the distance below the trigger */
@@ -202,6 +215,9 @@ section {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
     list-style-type: none;
     padding-left: 0;
+}
+.profile-dropdown:hover ul {
+    display: block;
 }
 
 /* Styling for dropdown list items */
@@ -237,20 +253,6 @@ section {
     color: inherit; /* Keep the color unchanged */
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* CSS Carousel*/
 .carousel {
     display: flex;
@@ -272,6 +274,7 @@ section {
     padding: 0;
     transition: opacity 0.5s ease;
     margin-right: -7vw;
+
 }
 .carousel img {
     width: 70%;
@@ -310,10 +313,6 @@ section {
     background-color: #4a7a99; 
 } 
 
-
-
-
-
 /* Button Styling */
 button {
     background-color: #2980b9;
@@ -332,12 +331,6 @@ button:active {
     transform: scale(0.98);
     box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.2);
 }
-
-
-
-
-
-
 
 /* BOOTSTRAP Carousel */
 .bs-carousel {
@@ -417,7 +410,6 @@ button:active {
     height: 100vh; 
 }
 
-
 #facilities-carousel .carousel-item img {
     width: 100%; 
     height: 100vh;  
@@ -454,7 +446,173 @@ button:active {
     z-index: 2;
 }
 
+.back-button {
+    position: absolute;
+    background-color: #2980b9;
+    left: 20px;
+    top: 20px;
+}
 
+/* Home Section Styling */
+#home {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    overflow: hidden;
+    
+}
+
+/* Keyframes for blinking effect */
+@keyframes blink {
+    0% {
+        opacity: 1; /* Fully visible */
+    }
+    50% {
+        opacity: 0; /* Invisible at 50% */
+    }
+    100% {
+        opacity: 1; /* Fully visible again */
+    }
+}
+
+.bg-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Background image with better scaling */
+.bg-image {
+    width: 100vw;
+    height: 100vw;
+    max-height: 100vh;
+    object-fit: cover;
+}
+
+
+
+
+     
+#text-in-image {
+    left: 30%;
+    position: absolute;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    z-index: 1;
+    width: 40vw;
+    height: 20vh;
+    font-size: 1rem;
+}
+
+.walk-in-hours-container {
+    display:flex;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    position: absolute;
+    width: 40vw; /* Set a fixed width on smaller screens */
+    height: auto;
+    text-align: center;
+    padding: 20px;
+}
+
+#display-walk-in-hours {
+    color: #ffcc00;
+    font-weight: bold;
+    white-space: normal; /* Allow text wrapping */
+    text-align: center; /* Center the text */
+    width: 100%; /* Ensure it spans the container width */
+    line-height: 1.5; /* Add spacing between lines */
+}
+
+#home #display-walk-in-hours{
+    font-size: clamp(1rem, 3vw, 3.5rem);
+
+}
+.get-started {
+    text-align: left; /* Align text to the left */
+    margin-top: 30px;
+}
+    
+.get-started-button {
+    background-image: linear-gradient(90deg, #1c1c1c, transparent); /* Gradient background */
+    color: #fff;
+    font-size: 1.2vw;
+    font-weight: 400; 
+    text-transform: uppercase; /* Keep the uppercase style */
+    letter-spacing: clamp(1px, 1.2px, 1.5px); /* Responsive letter spacing */
+    line-height: clamp(14px, 3vw, 16px); /* Responsive line height */
+    padding: 20px;
+    border: 2px solid black; /* Add the black outline */
+    border-radius: 0.25rem; /* Original border radius */
+    clip-path: polygon(0 0, 0 0, 100% 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 100%);
+    -webkit-clip-path: polygon(0 0, 0 0, 100% 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 100%);
+    cursor: pointer; /* Add hover cursor */
+    transition: all 0.3s ease-in; /* Smooth transition */
+    width: 15vw;
+    height: auto;
+    margin-top: 40%; /* Adjust this to move the button down */
+    position: absolute;
+    
+}
+
+
+.get-started-button:hover {
+    background-color: rgba(0, 0, 0, 0.7); /* Keep hover effect */
+    padding-left: 30px; /* Hover padding left adjustment */
+    padding-right: 30px; /* Hover padding right adjustment */
+    transition: all 0.3s ease-in; /* Ensure transition */
+}
+
+.appointment-button {
+    background-image: linear-gradient(90deg, #1c1c1c, transparent); /* Gradient background */
+    color: #fff;
+    font-size: clamp(0.8rem, 2vw, 1rem); /* Responsive font size */
+    font-weight: 400; /* Original font weight */
+    text-transform: uppercase; /* Keep the uppercase style */
+    letter-spacing: clamp(1px, 1.2px, 1.5px); /* Responsive letter spacing */
+    line-height: clamp(14px, 3vw, 16px); /* Responsive line height */
+    padding: clamp(9px, 2.1vw, 15px) clamp(25px, 5.1vw, 30px); /* Responsive padding */
+    border: 2px solid black; /* Add the black outline */
+    border-radius: 0.25rem; /* Original border radius */
+    clip-path: polygon(0 0, 0 0, 100% 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 100%);
+    -webkit-clip-path: polygon(0 0, 0 0, 100% 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 100%);
+    cursor: pointer; /* Add hover cursor */
+    transition: all 0.3s ease-in; /* Smooth transition */
+    margin-left: -30%; /* Keep button aligned to the left */
+    width: clamp(25%, 30%, 35%); /* Responsive width */
+    height: 65px;
+    margin-top: 40%; /* Adjust this to move the button down */
+    position: absolute;
+    right: 67%;
+    bottom: -6  0%;
+}
+
+
+.walk-in-label .default-text {
+    color: #ffd401; /* Yellow color for default text */
+    font-weight: bold; /* Make it bold */
+}
+
+#display-walk-in-hours {
+    color: #ffd401; /* Yellow color for dynamic content */
+    font-weight: bold;
+}
+
+.walk-in-text {
+    color: #ffd401; /* Yellow color for the second line */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.highlight {
+    color: #ffd401; /* Highlight color for time range */
+    font-weight: bold;
+}
+
+/* SCREEN SIZES */
 
 /* Media query for larger screens */
 @media (min-width: 1920px) {
@@ -537,179 +695,42 @@ button:active {
         font-weight: bold;
         color: blue;
     }
+    
+    
 
 }
 
 
-
-
-
-
-
-.back-button {
-    position: absolute;
-    background-color: #2980b9;
-    left: 20px;
-    top: 20px;
-}
-
-
-/* Home Section Styling */
-#home {
-    position: relative;
-    width: 100%;
-    height: 90vh;
-    overflow: hidden;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-/* Keyframes for blinking effect */
-@keyframes blink {
-    0% {
-        opacity: 1; /* Fully visible */
+@media (max-width: 768px) {
+    .right-links {
+        display: flex;
+        align-items: center; 
+        margin-right: 5vw;
+        
+        
     }
-    50% {
-        opacity: 0; /* Invisible at 50% */
+    /* Adjust the profile-dropdown and loader to align horizontally */
+    
+    .loader, .profile-icon{
+        
+        align-items: left; /* Vertically center the items */
+        justify-content: space-between; /* Space between the loader and the profile icon */
     }
-    100% {
-        opacity: 1; /* Fully visible again */
+    
+    /* Adjust the profile icon styles */
+    .profile-icon {
+        width: auto;
+        height: 20px;
+        position: absolute;
+        top: 40%;
     }
-}
-
-
-
-
-
-.bg-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-
-/* Background image with better scaling */
-.bg-image {
-    width: 100vw;
-    height: 100vw;
-    max-height: 100vh;
-    object-fit: cover;
-}
-
-.text-in-image {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    text-align: center;
-    font-family: 'Arial', sans-serif;
-    z-index: 1;
     
-}
-
-
-.tagline {
-    font-size: 2.5rem;
-    font-weight: bold;
-    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
-    margin-bottom: 20px;
-    margin-top: 30px;
-    position: relative; /* Ensures control over placement */
-    left: -538px; /* Moves the tagline to the left */
-    
-    
-}
-
-.walk-in-hours-container {
-    font-size: 2rem; /* Adjusted text size */
-    font-weight: 700;
-    background: rgba(0, 0, 0, 0.7);
-    padding: 20px 40px; /* Adjusted padding for better fit */
-    border-radius: 30px;
-    margin-bottom: 0px;
-    overflow: hidden;
-    position: relative; /* Ensures control over placement */
-    left: -500px; /* Moves the container to the left */
-    
-    width: 70%; /* Keeps the container width at 50% */
-    height: 200px; /* Adjusted container height */
-
-    display: flex; /* Enable flexbox */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-}
-
-#display-walk-in-hours {
-    color: #ffcc00;
-    font-size: 2.5rem; /* Adjusted text size */
-    font-weight: bold;
-    white-space: normal; /* Allow text wrapping */
-    text-align: center; /* Center the text */
-    width: 100%; /* Ensure it spans the container width */
-    line-height: 1.5; /* Add spacing between lines */
-}
-
-.get-started {
-    text-align: left; /* Align text to the left */
-    margin-top: 30px;
-}
-
-.get-started-button {
-    background-image: linear-gradient(90deg, #1c1c1c, transparent); /* Gradient background */
-    color: #fff;
-    font-size: 0.9rem; /* Match the original font size */
-    font-weight: 400; /* Original font weight */
-    text-transform: uppercase; /* Keep the uppercase style */
-    letter-spacing: 1.2px; /* Original letter spacing */
-    line-height: 14px; /* Maintain the original line height */
-    padding: 10px 25px; /* Merge padding styles */
-    border: 2px solid black; /* Add the black outline */
-    border-radius: 0.25rem; /* Original border radius */
-    clip-path: polygon(0 0, 0 0, 100% 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 100%);
-    -webkit-clip-path: polygon(0 0, 0 0, 100% 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 100%);
-    cursor: pointer; /* Add hover cursor */
-    transition: all 0.3s ease-in; /* Smooth transition */
-    margin-left: -500px; /* Align button to the left */
-    width: 30%;
-    overflow: hidden;
-    height: 55px;
-}
-
-.get-started-button:hover {
-    background-color: rgba(0, 0, 0, 0.7); /* Keep hover effect */
-    padding-left: 30px; /* Hover padding left adjustment */
-    padding-right: 30px; /* Hover padding right adjustment */
-    transition: all 0.3s ease-in; /* Ensure transition */
-}
-
-
-.walk-in-label .default-text {
-    color: #ffd401; /* Yellow color for default text */
-    font-weight: bold; /* Make it bold */
-}
-
-#display-walk-in-hours {
-    color: #ffd401; /* Yellow color for dynamic content */
-    font-weight: bold;
-}
-
-.walk-in-text {
-    color: #ffd401; /* Yellow color for the second line */
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.highlight {
-    color: #ffd401; /* Highlight color for time range */
-    font-weight: bold;
+    /* Adjust loader positioning */
+    .right-links .loader img {
+        width: auto;
+        height: 20px;
+        position: relative;
+        justify-content: flex-end;
+        
+    }
 }

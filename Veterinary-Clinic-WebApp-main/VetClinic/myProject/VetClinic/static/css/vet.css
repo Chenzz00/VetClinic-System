@@ -5,6 +5,8 @@ body {
     padding: 0;
     background-color: #f4f4f4;
     color: #333;
+    
+    
 }
 
 header {
@@ -24,7 +26,7 @@ header {
 
 .header-left h1 {
     margin: 0;
-    font-size: 2rem;
+    font-size: 2vw; 
 }
 
 .header-left h2 {
@@ -35,7 +37,9 @@ header {
 
 .header-right {
     position: absolute;
-    right: 20px; /* Align the profile icon to the right */
+    justify-items: right;
+    right: 7%;
+    top: 10%;
 }
 
 .profile-dropdown {
@@ -47,27 +51,27 @@ header {
     border: none;
     cursor: pointer;
     padding: 10px;
+    text-align: center;
 }
 
 .profile-dropdown img {
-    width: 40px;
-    height: 40px;
+    width: 6vw;
+    height: auto;
+    max-width: 40px;
+    max-width: 40px;
     border-radius: 50%;
 }
 
-
-
 .profile-dropdown ul {
-    display: none;
     position: absolute;
-    top: 40px;
-    right: 0;
+    left: 0;
     background-color: #fff;
-    border: 1px solid #ddd;
     border-radius: 5px;
-    padding: 10px;
+    padding: 3px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     z-index: 10;
+    width: auto;
+    max-width: 200px;
 }
 
 .profile-dropdown:hover ul {
@@ -77,6 +81,8 @@ header {
 .profile-dropdown ul li {
     list-style: none;
     padding: 8px 10px;
+
+    
 }
 
 .profile-dropdown ul li a {
@@ -85,13 +91,16 @@ header {
     padding: 10px 15px;
     text-decoration: none;
     color: #333;
-    font-size: 16px;
+    font-size: 1rem;
     font-family: Verdana, sans-serif;
+    
+    
     
 }
 
 .profile-dropdown ul li a:hover {
     background: #f0f0f0;
+    
 }
 
 .menu-icon {
@@ -156,43 +165,78 @@ tr:hover {
     color: #333;
 }
 
-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-button[disabled] {
-    background-color: #d3d3d3;
-    cursor: not-allowed;
-}
-
-
-
-
 .appointment-container {
-    width: 300px; /* Set your desired width */
-    height: calc(100vh - 60px); /* Adjust according to your header height */
-    overflow-y: auto; /* Allows scrolling */
+    position: fixed; /* Fixed position relative to the viewport */
+    bottom: 2%; /* Position it 10% upwards from the bottom */
+    left: 0; /* Align it to the left side */
+    width: 100vw; /* Set the width to 100% of the viewport width */
+    height: 45vh; /* Set the height to 10% of the viewport height */
+    overflow: hidden; /* Hide overflowed content */
+    background: linear-gradient(to right, rgba(120, 109, 84, 0.5), rgba(109, 95, 52, 0.5));
+ 
+    border-bottom: 4px solid #ccc; /* Optional top border */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for effect */
+    
+    display: flex; 
+    align-items: center; /* Center content vertically */
+    justify-content: left; /* Center content horizontally */
+    border-radius: 10px 10px 10px 10px; /* Rounded top corners */
+    margin: 0; /* Remove margin if any */
+    padding: 0; /* Remove padding to ensure full width */
+    flex: 1;
     border-right: 1px solid #ccc;
-    position: fixed;
-    left: 0;
-    top: 60px; /* Adjust according to your header height */
-    margin-left: 20px; /* Margin or gap to prevent overlap with the header */
-    border: 2px solid #000;
+    padding-right: 20px;
+    padding: 15px;
+    overflow-x: auto; /* Enable vertical scroll if needed */
+    margin-left: 0px;
+    margin-top: 15px;
+    
 }
+
+
 .text-box {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-bottom: 10px;
     background-color: #f9f9f9;
+    font-size: 1vw; 
+    margin:.5vw;
+    
 }
 
+.pending-title {
+    padding: 5px 10px;
+    background:#504322;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    position: relative;
+    top: 0;
+    left: 0;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    font-size: 2vw;
+    height: 42vh;
+    width: 20vw;
+    display: flex;
+    align-items: center;  /* Vertically center the text */
+    justify-content: center;  /* Horizontally center the text */
+    text-align: center; 
+    
+}
+
+.btn-form{
+    background: linear-gradient(to right, #524a38, #3c341c);
+            border: none;
+            padding: 10px;
+            color: #fff;
+            border-radius: 5px;
+            width: 15vw;
+            height: 5vh;
+            font-size: 1.1em;
+            cursor: pointer;
+}
+.btn-form:hover{
+    background: linear-gradient(to right, #786d54, #6d5f34);
+}
