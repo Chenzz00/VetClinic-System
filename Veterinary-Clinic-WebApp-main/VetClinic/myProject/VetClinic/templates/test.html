@@ -1,0 +1,298 @@
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .titles h3 {
+            margin: 0;
+            font-size: 16px;
+            text-align: center;
+            color: #000000;
+        }
+
+        .titles h1 {
+            margin: 0;
+            font-size: 28px;
+            text-align: center;
+            color: #940303;
+        }
+
+        .report-header {
+            margin: 15px;
+            font-size: 15px;
+            text-align: center;
+            color: #000000;
+        }
+
+        /* Separator Styling */
+        .separator {
+            width: 100%;
+            height: 8px;
+            background-color: #000000;
+            margin: 0;
+        }
+
+        /* Table Styling */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 5px;
+        }
+
+        table, th, td {
+            border: 1px solid #dddddd;
+        }
+
+        th, td {
+            padding: 5px;
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.5px;
+        }
+
+        th {
+            background-color: #d8d4d4;
+            color: #333232;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        .summary {
+            font-size: 13px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            line-height: 1.5px;
+        }
+
+        h2, h3 {
+            margin-top: 15px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .empty-message {
+            text-align: center;
+            font-size: 14px;
+            color: #242323;
+            font-style: italic;
+        }
+
+       /* Custom Styling for Each Header */
+        .borrowing-records-header,
+        .removed-equipment-header,
+        .top-borrowed-items-header,
+        .added-equipment-header,
+        .updated-quantity-header {
+            font-size: 17px;
+            color: #940000;
+            font-weight: bold;
+            text-align: left;
+            border-bottom: 1px solid #363636;
+            padding-bottom: 3px;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <div class="header">
+        <div class="titles">
+            <h3>LABORATORY EQUIPMENT BORROWING SYSTEM</h3>
+            <h1>TRANSACTION RECORDS REPORT</h1>
+        </div>
+    </div>
+
+    <!-- Separator -->
+    <hr class="separator">
+
+    <!-- Report Header -->
+    <div class="header">
+        <div class="titles">
+            <h2 class="report-header">{{ report_header }}</h2>  <!-- Display the custom header -->
+        </div>
+    </div>
+
+    <!-- Borrowing Records Section -->
+    <h2 class="borrowing-records-header">BORROWING RECORDS</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Items Borrowed</th>
+                    <th>Quantity</th>
+                    <th>Date of Reservation</th>
+                    <th>Date of Claim</th>
+                    <th>Date of Return</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.name }}</td>
+                    <td>{{ record.items_borrowed }}</td>
+                    <td>{{ record.quantity }}</td>
+                    <td>{{ record.reservation_date }}</td>
+                    <td>{{ record.date_claim }}</td>
+                    <td>{{ record.date_returned }}</td>
+                    <td>{{ record.status }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="empty-message">No records found this month.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <p class="summary"><span class="bold">Total Borrowing Records:</span> {{ total_borrowing_records }}</p>
+    <p class="summary"><span class="bold">Total Items Borrowed:</span> {{ total_items_borrowed }}</p>
+
+        <!-- Top 3 Most Borrowed Items Section -->
+    <h2 class="top-borrowed-items-header">3 MOST BORROWED ITEMS</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Times Borrowed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in top_borrowed_items %}
+                <tr>
+                    <td>{{ item.item }}</td>
+                    <td>{{ item.category }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.times_borrowed }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="empty-message">No items.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- Removed Equipment Section -->
+    <h2 class="removed-equipment-header">REMOVED EQUIPMENTS</h2>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Reason for Removal</th>
+                    <th>Quantity</th>
+                    <th>Date Removed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for equipment in removed_equipment %}
+                <tr>
+                    <td>{{ equipment.name }}</td>
+                    <td>{{ equipment.category }}</td>
+                    <td>{{ equipment.reason_for_removal }}</td>
+                    <td>{{ equipment.quantity }}</td>
+                    <td>{{ equipment.date_removed }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="empty-message">No equipment was removed during this month.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <p class="summary"><span class="bold">Total Removed Equipment:</span> {{ total_removed_equipment }}</p>
+    <p class="summary"><span class="bold">Total Quantity Removed:</span> {{ total_quantity_removed }}</p>
+
+    <!-- Added Equipment Section -->
+    <h3 class="added-equipment-header">ADDED EQUIPMENT</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Date Added</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if added_equipment %}
+                    {% for equipment in added_equipment %}
+                    <tr>
+                        <td>{{ equipment.item }}</td>
+                        <td>{{ equipment.initial_quantity }}</td>
+                        <td>{{ equipment.date_added|date:"F j, Y" }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="empty-message">No equipment added during this month.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Updated Quantity Section -->
+    <h3 class="updated-quantity-header">UPDATED QUANTITY</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Added Quantity</th>
+                    <th>Updated Quantity</th>
+                    <th>Date Updated</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for equipment in updated_quantities %}
+                <tr>
+                    <td>{{ equipment.item }}</td>
+                    <td>{{ equipment.quantity_added }}</td>
+                    <td>{{ equipment.quantity }}</td>
+                    <td>{{ equipment.last_updated_date|date:"F j, Y" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="empty-message">No updated quantity data available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</body>

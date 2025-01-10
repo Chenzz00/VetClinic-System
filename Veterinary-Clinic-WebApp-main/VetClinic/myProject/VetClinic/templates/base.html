@@ -21,7 +21,9 @@
    
 
     <div class="nav-bar">
-    <h3>PET CARE</h3>
+    <div class="container">
+        <img src="{% static 'media/pet_care.png' %}" class="logo logo-icon"></img>
+    </div>
     <div class="nav-links">
         <a href="#home">Home</a>
         <a href="#pets">Pets</a>
@@ -30,6 +32,7 @@
         <a href="#facilities">Facilities</a>
         <a href="#contacts">Contact</a>
     </div>
+    
 
     <!-- Right Links block is here -->
     {% block right_links %}
@@ -38,15 +41,30 @@
 </div>
 
         
-        
+
+
     
-</div>
+
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Find all message elements
+        var messages = document.querySelectorAll('.message');
+        
+        // Loop through each message and set timeout to hide it after 2 seconds
+        messages.forEach(function(message) {
+            setTimeout(function() {
+                message.classList.add('hide'); // Add the 'hide' class after 2 seconds
+            }, 2000); // 2 seconds delay
+        });
+    });
+  </script>
 
 
 <section id="home" class="home-container">
     <div class="bg-container">
         <img class="bg-image" src="{% static 'Media/head8.jpg' %}" alt="home">
-        <div class="text-in-image">
+        <div class="container" id="text-in-image">
             <div class="walk-in-hours-container">
                 <label id="display-walk-in-hours"></label>
             </div>
@@ -54,19 +72,9 @@
             
 
             <div>
-                        <!-- Right Links block is here -->
-            {% block get-started %}
-            <!-- Default content can be empty or you can add basic content here -->
+                {% block get-started %}        <!-- Right Links block is here -->
+                
             {% endblock %}
-            </div>
-            <p class="tagline">Trusted Care for Big Paws and Small</p>
-            
-        </div>
-        
-
-        {% block login-overlay %}
-        <!-- Default content can be empty or you can add basic content here -->
-        {% endblock %}
         
         </div>
        
@@ -335,16 +343,9 @@
     
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-
-
 {% block content %}
-    {% endblock %}
+{% endblock %}
+
     
 </body>
 </html> 
-
-
-
-
-
-

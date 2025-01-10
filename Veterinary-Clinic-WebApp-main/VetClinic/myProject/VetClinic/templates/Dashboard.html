@@ -8,7 +8,24 @@
     <script src="{% static 'javascript/dashboard.js' %}"></script>
     <title>Appointment Dashboard</title>
 </head>
+<style>
+    .note {
+        position: absolute;
+        top: -10px; /* Just below the logo */
+        left: 10px;
+        font-size: 16px;
+        font-weight: normal;
+        color: rgba(0, 0, 0, 0.5); /* Transparent black text color */
+    }
+</style>
+
 <body>
+
+    
+    <!-- Note about Logo Action -->
+    <h3 class="note"> Note: Click the logo to return to the homepage</h3>
+
+
     <div class="brand-name" style="width: 100%; padding: 20px; box-sizing: border-box;">
         <a href="{% url 'owner' %}" title="Dashboard" class="logo-link">
 
@@ -48,7 +65,8 @@
         </div>
 
         <div class="action-button" style="text-align: center; margin-top: 20px;">
-            <a href="{% url 'appwindow' %}" class="btn" style="padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">Appoint Now</a>
+            <a href="{% url 'appwindow' %}" class="btn" style="padding: 10px 20px; background-color: #4CAF50; color: white; 
+            text-decoration: none; border-radius: 5px;">Appoint Now</a>
         </div>
     </div>
 </body>

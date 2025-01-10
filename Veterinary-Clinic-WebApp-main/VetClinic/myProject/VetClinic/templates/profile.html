@@ -51,9 +51,8 @@
                     <input type="email" class="form-control" id="email" name="email" value="{{ email }}" 
                            placeholder="Enter your new email" required maxlength="30" onkeydown="return (event.keyCode !== 32);" 
                            oninput="checkEmailFormat(this)" readonly>
-                    <div class="form-text">Format: XXXXX@gmail.com (30 characters only)</div>
-                    <span id="email-warning" class="text-danger d-none">Please enter a valid email ending 
-                        with @gmail.com</span>                    
+                    <div class="form-text">Not Editable</div>
+                    <span id="email-warning" class="text-danger d-none"></span>                    
                 </div>
                 <div class="col-12 form-group">
                     <label for="phone">Phone Number</label>

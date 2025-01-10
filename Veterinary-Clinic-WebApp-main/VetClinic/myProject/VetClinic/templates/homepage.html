@@ -2,24 +2,55 @@
 
 {% block title %}Homepage{% endblock %}
 
-{% block content %}
-<!-- Your homepage content goes here -->
-{% endblock %}
+
 
 {% block right_links %}
 {% load static %}
+{% if session_expired %}
+<script>
+    alert("Your session has expired due to inactivity. You will be redirected.");
+    window.location.href = "{% url 'index' %}";
+    
+</script>
+{% endif %}
 
+<script>
+    // Define timeout duration and initialize variables
+    const timeoutDuration = 10000; // 10 seconds for testing; set to real duration later
+    let lastActivityTime = Date.now();
 
+    // Function to check for session expiration
+    function checkSessionExpiration() {
+        const currentTime = Date.now();
+        if (currentTime - lastActivityTime > timeoutDuration) {
+            alert("Your session has expired due to inactivity. You will be redirected to the login window.");
+            window.location.href = "{% url 'index' %}"; // Redirect to login page
+        }
+    }
+
+    // Function to reset inactivity timer on user activity
+    function resetInactivityTimer() {
+        lastActivityTime = Date.now();
+    }
+
+    // Add event listeners for user activity
+    window.addEventListener('mousemove', resetInactivityTimer);
+    window.addEventListener('keypress', resetInactivityTimer);
+
+    // Periodically check for session expiration
+    setInterval(checkSessionExpiration, 1000); // Check every second
+
+</script>
 
 
 <div class="right-links">
-    <!-- Profile Icon and Notifications Button -->
     <div class="profile-notifications">
-
-        <!-- Notifications Button -->
-        <a href="{% url 'pAppointment' %}" title="Pending Appointments" class="notification-button">
-            <img class="profile-icon" src="{% static 'Media/appointment.png' %}" alt="Profile Icon">
+        <!-- Loader Button -->
+        <a href="{% url 'pAppointment' %}" class="loader" title="Pending Appointments">
+            <img src="{% static 'Media/appointment.png' %}" alt="Notification Icon" class="notification-icon">
+            <div id="notification-badge" class="point {% if pending_count == 0 %}hidden{% endif %}">+1</div>
         </a>
+    </div>
 
         <!-- Profile Icon -->
         <details class="profile-dropdown">
@@ -50,7 +81,10 @@
             </ul>
         </details>
     </div>
+    {{ redirect_to_login_immediately}}
 </div>
+
+
 
 <style>
 .profile-dropdown[open] .profile-dropdown-content {
@@ -95,41 +129,66 @@
     gap: 15px;
 }
 
-.notification-button {
-    display: flex;
+.notification-icon {
+    width: 50vw;
+    height: 50vh;
+
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
-    background-color: transparent;
-    padding: 0;
-    position: relative;
 }
 
-.notification-button img {
-    width: 50px;
-    height: 50px;
+
+
+.loader {
+  
+  background-color: transparent;
+  border-radius: 7px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  
+  position: relative;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-.notification-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 5px;
-    font-size: 12px;
-    font-weight: bold;
+
+
+.notification-icon {
+  width: 3vw;
+  height: 5vh;
+}
+
+.point {
+  position: absolute;
+  top: 10px; /* Adjust position to fit the icon */
+  right: 50px; /* Adjust position to fit the icon */
+  width: 20px; /* Size of the red circle */
+  height: 20px;
+  background-color: red; /* Red color for the badge */
+  border-radius: 50%; /* Make it a circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white; /* White text for the number */
+  font-size: 12px; /* Font size for the number */
+  font-weight: bold;
+}
+
+.hidden {
+  display: none; /* Hide the badge when no notifications */
 }
 </style>
-{% endblock %}
 
+{% endblock %}
 
 {% block get-started %}
 <div class="get-started">
     <a href="{% url 'dashboard' %}">
-        <button class="get-started-button" id="getStartedBtn">Appointment</button>
+        <button class="appointment-button" id="getStartedBtn">Appointment</button>
     </a>
 </div>
+
+
 {% endblock %}
+f

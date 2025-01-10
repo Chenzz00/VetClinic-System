@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Care Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        h2 {
+            font-size: 20px;
+            font-weight: normal;
+            margin-top: 0;
+            color: #4CAF50;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .table th, .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .table th {
+            background-color: #f1f1f1;
+            color: #4CAF50;
+        }
+        .summary {
+            margin-top: 30px;
+            font-size: 14px;
+            background-color: #e7f3e7;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 14px;
+            color: #888;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        {% if formatted_start_date == 'All Time' %}
+            <h1>Generated Report for All Time</h1>
+        {% else %}
+            <h1>Generated Report from {{ formatted_start_date }} to {{ formatted_end_date }}</h1>
+        {% endif %}
+    </div>
+    
+    
+    <h2>Appointment details</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Species</th>
+            <th>Services</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for schedule in schedules %}
+            {% if schedule.payment_status == "Paid" %}
+            <tr>
+                <td>{{ schedule.Name }}</td>
+                <td>{{ schedule.date }}</td>
+                <td>{{ schedule.time }}</td>
+                <td>{{ schedule.species }}</td>
+                <td>{{ schedule.services }}</td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Transaction details</h2>
+<table class="table" id="transactionTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Price</th>
+            <th>Payment Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for schedule in schedules %}
+            {% if schedule.payment_status == "Paid" %}
+            <tr>
+                <td>{{ schedule.Name }}</td>
+                <td>{{ schedule.date }}</td>
+                <td class="amount">{{ schedule.amount }}</td>
+                <td>{{ schedule.payment_status }}</td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+
+    <div class="summary">
+        <div><strong>Number of Schedules:</strong> {{ total_schedules }}</div>
+        
+        <div><strong>Total Appointment Revenue:</strong> {{ total_schedule_amount }}</div>
+        
+    </div>
+
+
+    
+    <div id="totalAmount"></div>
+
+    <div class="footer">
+        <p>&copy; {{ current_year }} Pet Care Services</p>
+    </div>
+</div>
+
+<script>
+   // Function to sum the amounts from the table and display it
+window.onload = function() {
+    var total = 0;
+    // Select all rows in the transaction table
+    var rows = document.querySelectorAll('#transactionTable tbody tr');
+
+    rows.forEach(function(row) {
+        // Check if the payment_status column contains "Paid"
+        var paymentStatus = row.querySelector('td:last-child'); // Assumes "Payment Status" is the last column
+        if (paymentStatus && paymentStatus.innerText.trim() === "Paid") {
+            // Get the amount value
+            var amountCell = row.querySelector('.amount'); // Assumes amount has the class "amount"
+            if (amountCell) {
+                total += parseFloat(amountCell.innerText) || 0; // Convert text to float and add to total
+            }
+        }
+    });
+
+    // Display the total amount
+    document.getElementById('totalAmount').innerHTML = '<strong>Total Amount:</strong> ' + total.toFixed(2);
+};
+
+</script>
+
+</body>
+</html>

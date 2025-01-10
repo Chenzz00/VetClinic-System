@@ -11,6 +11,7 @@
 {% endblock %}
 
 <style>
+    
     .home-container {
         position: relative;
         width: 100%;
@@ -41,30 +42,44 @@
     .login-overlay {
         position: absolute;
         top: 50%;
-        right: 100px;
+        right: 5%;
         transform: translateY(-50%);
         background: rgba(0, 0, 0, 0.5);
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.1);
-        width: 396px;
+        width: 23vw;
+        min-width:200px;
+        height: auto;
+        min-height: 300px;
         z-index: 2;
+        transition: width 0.3s ease, height 0.3s ease, padding 0.3s ease;
     }
 
     .login-form {
         display: flex;
         flex-direction: column;
         gap: 12px;
+        width: 100%;
+        
     }
 
-    .login-input {
+    .login-input, .login-button, .create-account-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%; 
+        height: 5vh;
         padding: 14px 16px;
-        font-size: 17px;
+        font-size: 1rem;
         border: 1px solid #dddfe2;
         border-radius: 6px;
-        width: 100%;
         margin-bottom: 12px;
+        box-sizing: border-box;  /* Ensures padding and borders are included in the element's width */
+        transition: width 0.3s ease, font-size 0.3s ease, padding 0.3s ease, height 0.3s ease;
+        z-index: 3;
     }
+
 
     .login-input:focus {
         outline: none;
@@ -74,13 +89,8 @@
 
     .login-button {
         background-color: #1877f2;
-        border: none;
-        border-radius: 6px;
         color: white;
-        font-size: 20px;
         font-weight: bold;
-        padding: 14px 16px;
-        width: 100%;
         cursor: pointer;
         transition: background-color 0.3s;
     }
@@ -90,39 +100,56 @@
     }
 
     .forgot-password {
+        font-size: 1rem;
+        height: 50px;
+        position: relative;
+        bottom: 20px;
+        margin-bottom: 0;
+        transition: font-size 0.3s ease, bottom 0.3s ease;
         text-align: center;
-        margin: 16px 0;
     }
 
-    .forgot-password a {
-        color: #1877f2;
-        text-decoration: none;
-        font-size: 14px;
-    }
-
-    .divider {
-        border-bottom: 1px solid #dadde1;
-        margin: 20px 0;
+    .create-account {
+        margin-top: -55px;
+        transition: margin-top 0.3s ease;
     }
 
     .create-account-button {
         background-color: #42b72a;
-        border: none;
-        border-radius: 6px;
         color: white;
-        font-size: 17px;
+        font-size: 1rem;
         font-weight: bold;
-        padding: 14px 16px;
-        width: auto;
-        margin: 0 auto;
-        display: block;
         cursor: pointer;
         transition: background-color 0.3s;
     }
-
     .create-account-button:hover {
         background-color: #36a420;
     }
+
+    .create-account a {
+        text-decoration-color: #ffffff; /* Set the color of the underline */
+        color: inherit; /* Ensure the color is consistent with the button */
+}
+
+    .create-account a:hover {
+        text-decoration: underline; /* Add underline on hover */
+        text-decoration-color: #ffffff; /* Set the color of the underline */
+}   
+
+#display-walk-in-hours {
+    color: #ffcc00;
+    font-size: 2.5rem; /* Adjusted text size */
+    font-weight: bold;
+    white-space: normal; /* Allow text wrapping */
+    text-align: center; /* Center the text */
+    width: 100%; /* Ensure it spans the container width */
+    line-height: 1.5; /* Add spacing between lines */
+}
+
+
+    
+    
+
 
     /* Notification style */
     .notification {
@@ -150,19 +177,33 @@
     }
 
     .message-container {
+        display: flex;
         width: 100%;
-        max-width: 600px;
-        margin: 0 auto;
+        max-width: 90%;
         padding: 15px;
         background-color: #f8d7da; 
         border: 1px solid #f5c6cb; 
         color: #721c24; 
         border-radius: 5px;
         text-align: center;
+        justify-content: center;
+        position: absolute;
+        top: 65%;
+        left: 50%;
+        transform: translate(-50%, -50%);  /* Center the element */
+        z-index: 4;
     }
 </style>
 
+    
+
+
+    
+
+
+
 <script>
+    
     document.addEventListener('DOMContentLoaded', function () {
         const getStartedBtn = document.getElementById('getStartedBtn');
         const emailInput = document.getElementById('email');
@@ -208,7 +249,7 @@
             onkeydown="return (event.keyCode !== 32);" 
             oninput="checkPasswordFormat(this)">
         <button type="submit" class="login-button">Log In</button>
-
+        <br>
         <!-- Display error/success messages -->
         {% if messages %}
             <div id="loginMessage" class="message-container">
@@ -219,13 +260,12 @@
                 {% endfor %}
             </div>
         {% endif %}
-
+        <br>
         <div class="forgot-password">
             <a href="{% url 'forgot' %}" target="_blank" style="color: #1a73e8;">Forgot password?</a>
         </div>
-
-        <div class="divider"></div>
-        <div class="forgot-password">
+        
+        <div class="create-account">
             <a href="{% url 'registration' %}">
                 <button type="button" class="create-account-button">
                     Create New Account
