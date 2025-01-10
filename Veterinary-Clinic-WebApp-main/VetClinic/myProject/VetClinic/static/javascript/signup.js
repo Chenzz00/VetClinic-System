@@ -18,11 +18,7 @@ function validateForm(event) {
         return false; 
     }
 
-    // Check if email format is correct
-    if (!checkEmailFormat(emailInput)) {
-        alert("Please enter a valid email address ending with @gmail.com");
-        return false;
-    }
+    
     
     // If all validations pass, submit the form
     document.getElementById("registration-form").submit();
@@ -50,12 +46,28 @@ function checkEmailFormat(emailInput) {
     }
 }
 
-function validateForm(event) {
-    event.preventDefault(); // Prevent form submission initially
+// Refactored code for email input
+function enforceEmailInput(event) {
+    let input = event.target;
+    // Remove spaces if typed in the input field
+    input.value = input.value.replace(/\s/g, '');
 
-    // Show a custom notification with only the OK button
-    alert("Your account is being registered. Click OK to continue.");
+    // Check if '@' is typed and append the domain automatically
+    if (input.value.indexOf('@') !== -1 && !input.value.includes('@gmail.com')) {
+        if (input.value.indexOf('@') === input.value.length - 1) {
+            input.value += "gmail.com";
+        }
+    }
 
-    // After the user clicks OK, submit the form
-    document.getElementById("registration-form").submit();
+    // Only allow valid characters for the email input
+    const validKeys = /^[a-zA-Z0-9@._-]$/;
+    if (!validKeys.test(event.key)) {
+        event.preventDefault();
+    }
 }
+
+document.getElementById('email').addEventListener('input', enforceEmailInput);
+document.getElementById('email').addEventListener('keydown', enforceEmailInput);
+
+
+
